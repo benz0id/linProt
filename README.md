@@ -41,17 +41,11 @@ labels <- rhoData$labels
 shuffled_datasets <- shuffled_partitions(examples, labels, 650,
                                         encode=encode_onehot)
 
-train_data <- shuffled_datasets$e1
-train_labels <- shuffled_datasets$l1
-valid_data <- shuffled_datasets$e2
-valid_labels <- shuffled_datasets$l2
-
 # Train a linear model to perform regression.
-model <- linear_train(train_data,
-                     train_labels,
-                     valid_data,
-                     valid_labels)
-
+model <- linear_train(shuffled_datasets$e1,
+                      shuffled_datasets$l1,
+                      shuffled_datasets$e2,
+                      shuffled_datasets$l2)
 
 # View the expected influence of each residue on the function, (lambda max
 # in this case).
@@ -67,9 +61,9 @@ plot_cost_over_rep(model)
 #> Ignoring unknown aesthetics: line
 
 # Make some predictions.
-results <- predict(valid_data, model)
+results <- predict(shuffled_datasets$e2, model)
 results[1:5]
-#> [1] 546.8277 537.5129 534.1281 541.4704 545.6424
-valid_labels[1:5]
-#> [1] 564 495 523 551 553
+#> [1] 540.1165 525.5414 529.7755 538.2172 532.9388
+shuffled_datasets$l2[1:5]
+#> [1] 536 540 530 544 533
 ```

@@ -1,0 +1,27 @@
+Package: linProt
+Type: Package
+Title: Train Liner Model to Predcit Continouslty Distributed Protein Functions
+Version: 0.1.0
+Author: Ben Tudor Price
+Maintainer: Ben Tudor Price <benjamin.tudorprice@mail.utoronto.ca>
+Description: provides a pipeline that allows for that seamless training and 
+    evaluation of linear models for protein function prediction from user provided 
+    labelled AA sequences. This package provides visualizations of the patterns 
+    learned by the linear models which can be used to generate novel proteins with 
+    customizable functional characteristics.
+License: MIT + file LICENSE
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.2
+Encoding: UTF-8
+LazyData: true
+VignetteBuilder: knitr
+Imports:
+    ggplot2,
+    gplots,
+    assertthat,
+    assert,
+    testthat,
+    progress,
+    Peptides,
+    msa
+URL: https://github.com/benz0id/linProt

@@ -18,14 +18,19 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of linProt is to ...
+linProtFunc provides a pipeline that allows for that seamless training and
+evaluation of linear models for protein function prediction from user
+provided labelled AA sequences, including support for regression  tasks.
+This package provides visualizations of the patterns learned by the linear
+models which can be used to generate novel proteins with optimised
+functional characteristics.
 
 ## Installation
 
 You can install the development version of linProt like so:
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+install_github("benz0id/linProt")
 ```
 
 ## Example
@@ -34,7 +39,35 @@ This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
 library(linProt)
-## basic example code
+data(rhoData)
+
+examples <- rhoData$data
+labels <- example_data$labels
+
+# Shuffle, partition, and encode data set.
+shuffled_datasets <- shuffled_partitions(examples, labels, 650,
+                                        encode=encode_onehot)
+
+train_data <- shuffled_datasets$e1
+train_labels <- shuffled_datasets$l1
+valid_data <- shuffled_datasets$e2
+valid_labels <- shuffled_datasets$l2
+
+# Train a linear model to perform regression.
+model <- linear_train(train_data,
+                     train_labels,
+                     valid_data,
+                     valid_labels)
+
+
+# View the expected influence of each residue on the function, (lambda max
+# in this case).
+
+residue_effect_heatmap(model, 380, 410)
+plot_cost_over_rep(model)
+
+# Make some predictions.
+results <- predict(valid_data, model)
 ```
 
 What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:

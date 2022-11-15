@@ -1,4 +1,4 @@
-#' MPLNClust: Clustering via mixtures of multivariate Poisson-log normal distribution
+#' Linprot
 #'
 #' linProtFunc provides a pipeline that allows for that seamless training and
 #' evaluation of linear models for protein function prediction from user
@@ -7,8 +7,8 @@
 #' models which can be used to generate novel proteins with optimised
 #' functional characteristics.
 #'
-#' @section MPLNClust functions:
-#' The MPLNClust package provides 10 functions:
+#' @section linProt functions:
+#' The linProt package provides 10 functions:
 #' \itemize{
 #'   \item shuffled_partitions
 #'   \item encode_onehot
@@ -21,13 +21,15 @@
 #'   \item residue_effect_heatmap
 #' }
 #'
+#' @section linProt data:
+#' The linProt packages also provides a basic dataset for the training of
+#' linear models, \textbf{"rhoData"}.
+#'
 #' @author {Benjamin Tudor Price, \email{bejamin.tudorprice@mail.utoronto.ca}. }
 #'
 #' @examples
 #'
-#' example_data <- get_example_data()
-#'
-#' examples <- example_data$data
+#' examples <- rhoData$data
 #' labels <- example_data$labels
 #'
 #' # Shuffle, partition, and encode data set.
@@ -56,47 +58,29 @@
 #' residue_effect_heatmap(model, 380, 410)
 #'
 #' plot_cost_over_rep(model)
+#'
+#' results <- predict(valid_data, model)
 #' @references
 #'
+#' Mei, H., Liao, Z. H., Zhou, Y., & Li, S. Z. (2005). A new set of amino acid
+#' descriptors and its application in peptide QSARs. Biopolymers, 80(6),
+#' 775–786. \href{https://doi.org/10.1002/bip.20296}
 #'
+#' Xu, Y., Verma, D., Sheridan, R. P., Liaw, A., Ma, J., Marshall, N. M.,
+#' McIntosh, J., Sherer, E. C., Svetnik, V., & Johnston, J. M. (2020).
+#' Deep Dive into Machine Learning Models for Protein Engineering.
+#' Journal of Chemical Information and Modeling, 60(6), 2773–2790.
+#' \href{https://doi.org/10.1021/acs.jcim.0c00073}
 #'
+#' Karasuyama, M., Inoue, K., Nakamura, R., Kandori, H., & Takeuchi, I. (2018).
+#' Understanding Colour Tuning Rules and Predicting Absorption Wavelengths of
+#' Microbial Rhodopsins by Data-Driven Machine-Learning Approach. Scientific
+#' Reports, 8(1). https://doi.org/10.1038/s41598-018-33984-w
 #'
-#'
-#'
-#'
-#'
-#' Silva, A. et al. (2019). A multivariate Poisson-log normal mixture model
-#' for clustering transcriptome sequencing data. \emph{BMC Bioinformatics} 20.
-#' \href{https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-019-2916-0}{Link}
-#'
-#' Subedi, S., and R. Browne (2020). A parsimonious family of multivariate Poisson-lognormal
-#' distributions for clustering multivariate count data. arXiv preprint arXiv:2004.06857.
-#' \href{https://arxiv.org/pdf/2004.06857.pdf}{Link}
-#'
-#' Aitchison, J. and C. H. Ho (1989). The multivariate Poisson-log normal distribution.
-#' \emph{Biometrika} 76.
-#'
-#' Akaike, H. (1973). Information theory and an extension of the maximum likelihood
-#' principle. In \emph{Second International Symposium on Information Theory}, New York, NY,
-#' USA, pp. 267–281. Springer Verlag.
-#'
-#' Arlot, S., Brault, V., Baudry, J., Maugis, C., and Michel, B. (2016).
-#' capushe: CAlibrating Penalities Using Slope HEuristics. R package version 1.1.1.
-#'
-#' Biernacki, C., G. Celeux, and G. Govaert (2000). Assessing a mixture model for
-#' clustering with the integrated classification likelihood. \emph{IEEE Transactions
-#' on Pattern Analysis and Machine Intelligence} 22.
-#'
-#' Bozdogan, H. (1994). Mixture-model cluster analysis using model selection criteria
-#' and a new informational measure of complexity. In \emph{Proceedings of the First US/Japan
-#' Conference on the Frontiers of Statistical Modeling: An Informational Approach:
-#' Volume 2 Multivariate Statistical Modeling}, pp. 69–113. Dordrecht: Springer Netherlands.
-#'
-#' Robinson, M.D., and Oshlack, A. (2010). A scaling normalization method for differential
-#' expression analysis of RNA-seq data. \emph{Genome Biology} 11, R25.
-#'
-#' Schwarz, G. (1978). Estimating the dimension of a model. \emph{The Annals of Statistics}
-#' 6.
+#' Bedbrook, C. N., Yang, K. K., Robinson, J. E., Mackey, E. D., Gradinaru, V.,
+#' & Arnold, F. H. (2019). Machine learning-guided channelrhodopsin engineering
+#' enables minimally invasive optogenetics. Nature Methods, 16(11), 1176–1184.
+#' https://doi.org/10.1038/s41592-019-0583-8
 #'
 #' @docType package
 #' @name linProt

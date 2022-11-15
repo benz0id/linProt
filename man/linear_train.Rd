@@ -47,3 +47,25 @@ prediction of further examples.
 Trains a linear model using gradient descent. Stores the performance on the
 training and validations sets throughout the process.
 }
+\examples{
+
+examples <- rhoData$data
+labels <- rhoData$labels
+
+shuffled_datasets <- shuffled_partitions(examples, labels, 650,
+                                         encode=encode_physiochemical)
+
+model <- linear_train(shuffled_datasets$e1,
+                      shuffled_datasets$l1,
+                      shuffled_datasets$e2,
+                      shuffled_datasets$l2,
+                      reg = 'ridge',
+                      reg_hypers = setNames(c(0.001, 0.001), c("l1", "l2")),
+                      num_iter = 1000,
+                      rec_loss_every = 100,
+                      learning_rate = 0.001
+                      )
+
+predict(examples[50:100, ,], model)
+
+}

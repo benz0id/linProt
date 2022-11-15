@@ -28,10 +28,9 @@ Extend produced figure as necceesary for best results.
 }
 \examples{
 
-example_data <- get_example_data()
 
-examples <- example_data$data
-labels <- example_data$labels
+examples <- rhoData$data
+labels <- rhoData$labels
 
 shuffled_datasets <- shuffled_partitions(examples, labels, 650,
                                          encode=encode_onehot)

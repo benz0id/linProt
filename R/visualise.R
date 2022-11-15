@@ -20,10 +20,9 @@
 #'
 #' @examples
 #'
-#' example_data <- get_example_data()
 #'
-#' examples <- example_data$data
-#' labels <- example_data$labels
+#' examples <- rhoData$data
+#' labels <- rhoData$labels
 #'
 #' shuffled_datasets <- shuffled_partitions(examples, labels, 650,
 #'                                          encode=encode_onehot)
@@ -87,10 +86,8 @@ residue_effect_heatmap <- function(model,
 #'
 #' @examples
 #'
-#' example_data <- get_example_data()
-#'
-#' examples <- example_data$data
-#' labels <- example_data$labels
+#' examples <- rhoData$data
+#' labels <- rhoData$labels
 #'
 #' shuffled_datasets <- shuffled_partitions(examples, labels, 650,
 #'                                          encode=encode_physiochemical)
@@ -154,10 +151,8 @@ property_effect_heatmap <- function(model,
 #' @param model A model produced by linear train.
 #'
 #' @examples
-#' example_data <- get_example_data()
-#'
-#' examples <- example_data$data
-#' labels <- example_data$labels
+#' examples <- rhoData$data
+#' labels <- rhoData$labels
 #'
 #' shuffled_datasets <- shuffled_partitions(examples, labels, 650,
 #'                                          encode=encode_physiochemical)

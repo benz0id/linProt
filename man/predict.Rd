@@ -19,3 +19,21 @@ Vecotr of double predictions.
 Performs regression using the given, trained model in order to predict
 some continuously ditributed protein function.
 }
+\examples{
+
+examples <- rhoData$data
+labels <- rhoData$labels
+
+shuffled_datasets <- shuffled_partitions(examples, labels, 650,
+                                         encode=encode_physiochemical)
+
+# Train a linear model to perform regression.
+
+model <- linear_train(shuffled_datasets$e1,
+                      shuffled_datasets$l1,
+                      shuffled_datasets$e2,
+                      shuffled_datasets$l2)
+
+predict(examples[1, ,], model)
+
+}

@@ -31,10 +31,8 @@ predict_linearised <- function(X, w){
 #'
 #' @examples
 #'
-#' example_data <- get_example_data()
-#'
-#' examples <- example_data$data
-#' labels <- example_data$labels
+#' examples <- rhoData$data
+#' labels <- rhoData$labels
 #'
 #' shuffled_datasets <- shuffled_partitions(examples, labels, 650,
 #'                                          encode=encode_physiochemical)
@@ -131,10 +129,8 @@ mse <- function(y, t){
 #'
 #' @examples
 #'
-#' example_data <- get_example_data()
-#'
-#' examples <- example_data$data
-#' labels <- example_data$labels
+#' examples <- rhoData$data
+#' labels <- rhoData$labels
 #'
 #' shuffled_datasets <- shuffled_partitions(examples, labels, 650,
 #'                                          encode=encode_physiochemical)
@@ -148,7 +144,7 @@ mse <- function(y, t){
 #'                       num_iter = 1000,
 #'                       rec_loss_every = 100,
 #'                       learning_rate = 0.001
-                        )
+#'                       )
 #'
 #' predict(examples[50:100, ,], model)
 #'

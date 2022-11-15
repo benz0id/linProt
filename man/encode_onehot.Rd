@@ -15,3 +15,10 @@ Rank 3 array of peptide sequence encodings.
 \description{
 Encode Aligned Peptide Sequences into a One-hot Matrix
 }
+\examples{
+
+examples <- rhoData$data
+
+encode_onehot(examples)
+
+}

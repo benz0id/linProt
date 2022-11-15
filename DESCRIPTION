@@ -23,5 +23,9 @@ Imports:
     testthat,
     progress,
     Peptides,
-    msa
+    seqinr,
+    knitr,
+    tidyverse
 URL: https://github.com/benz0id/linProt
+Depends: 
+    R (>= 2.10)

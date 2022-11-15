@@ -17,6 +17,7 @@
 #'
 #' @return A character representation of the best peptide.
 #'
+#'
 #' @export
 maximal_sequence <- function(model, min = FALSE){
   w <- model$weights

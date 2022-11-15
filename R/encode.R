@@ -1,28 +1,4 @@
-library(assertthat)
-library(msa)
 
-
-get_example_data <- function(){
-  aligned_seqs <- read.fasta('data/sample.fasta')
-  names_vec <- as.numeric(names(aligned_seqs))
-  names(names_vec) <- 1:length(names_vec)
-  names_vec <- sort(names_vec)
-  inds <- as.numeric(names(names_vec))
-
-
-  aligned_seqs <- as.list(aligned_seqs)
-  aligned_seqs <- lapply(aligned_seqs, as.character)
-  aligned_seqs <- lapply(aligned_seqs, paste, collapse='')
-
-  aligned_seqs <- aligned_seqs[inds]
-
-  lambda_max_vals <- read_csv("data/lambda_max_data.csv")$lmax
-
-  dat <- list(aligned_seqs, lambda_max_vals)
-  names(dat) <- c("data", "labels")
-
-  return(dat)
-}
 
 #' Shuffle, Partition, and Encode Datasets.
 #'
@@ -85,9 +61,8 @@ strs_to_matrix <- function(strs){
 #' @return Rank 3 array of peptide sequence encodings.
 #'
 #' @examples
-#' example_data <- get_example_data()
 #'
-#' examples <- example_data$data
+#' examples <- rhoData$data
 #'
 #' encode_onehot(examples)
 #'
@@ -129,9 +104,8 @@ encode_onehot <- function(AA_seqs){
 #' @return Rank 3 array of peptide sequence encodings.
 #'
 #' @examples
-#' example_data <- get_example_data()
 #'
-#' examples <- example_data$data
+#' examples <- rhoData$data
 #'
 #' encode_physchem(examples)
 #'

@@ -15,3 +15,10 @@ Rank 3 array of peptide sequence encodings.
 \description{
 Encode Aligned Peptide Sequences Using the VHSE8 Matrix
 }
+\examples{
+
+examples <- rhoData$data
+
+encode_physchem(examples)
+
+}

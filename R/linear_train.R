@@ -53,7 +53,7 @@ predict <- function(X, model){
   X_lin <- reduce_input_dim(X)
   w <- model$weights
   dim(w) <- dim(w)[1] * dim(w)[2]
-  w <- cbind(w, model$intercept)
+  w <- append(w, model$intercept, length(w))
 
   return(predict_linearised(X_lin, w))
 }

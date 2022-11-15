@@ -42,23 +42,17 @@ library(linProt)
 data(rhoData)
 
 examples <- rhoData$data
-labels <- example_data$labels
+labels <- rhoData$labels
 
 # Shuffle, partition, and encode data set.
 shuffled_datasets <- shuffled_partitions(examples, labels, 650,
                                         encode=encode_onehot)
 
-train_data <- shuffled_datasets$e1
-train_labels <- shuffled_datasets$l1
-valid_data <- shuffled_datasets$e2
-valid_labels <- shuffled_datasets$l2
-
 # Train a linear model to perform regression.
-model <- linear_train(train_data,
-                     train_labels,
-                     valid_data,
-                     valid_labels)
-
+model <- linear_train(shuffled_datasets$e1,
+                      shuffled_datasets$l1,
+                      shuffled_datasets$e2,
+                      shuffled_datasets$l2)
 
 # View the expected influence of each residue on the function, (lambda max
 # in this case).
@@ -67,21 +61,8 @@ residue_effect_heatmap(model, 380, 410)
 plot_cost_over_rep(model)
 
 # Make some predictions.
-results <- predict(valid_data, model)
+results <- predict(shuffled_datasets$e2, model)
+results[1:5]
+shuffled_datasets$l2[1:5]
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.

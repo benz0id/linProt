@@ -16,6 +16,22 @@
 #' @param encode Function to be used to encode the given examples. NULL by
 #' default, returning the original unmodified peptide sequences.
 #'
+#'
+#' @examples
+#' examples <- rhoData$data
+#' labels <- rhoData$labels
+#'
+#' # Shuffle, partition, and encode data set.
+#' shuffled_datasets <- shuffled_partitions(examples, labels, 650,
+#'                                          encode=encode_onehot)
+#'
+#' train_data <- shuffled_datasets$e1
+#' train_labels <- shuffled_datasets$l1
+#'
+#' valid_data <- shuffled_datasets$e2
+#' valid_labels <- shuffled_datasets$l2
+#'
+#'
 #' @export
 shuffled_partitions <- function(examples, labels, num_p1, encode=NULL){
   num_examples <- length(labels)
@@ -107,20 +123,19 @@ encode_onehot <- function(AA_seqs){
 #'
 #' examples <- rhoData$data
 #'
-#' encode_physchem(examples)
+#' encode_physchem(examples)[1:5,]
+#'
+#'
 #'
 #' @export
-#' @import Peptides
 #' @import assertthat
 encode_physchem <- function(AA_seqs){
-  data("AAdata")
-  scale <- AAdata$VHSE
   num_vhses <- 8
 
   get_VHSEs <- function(AA){
     res <- numeric(num_vhses)
     for (v_num in seq_along(res)){
-      res[v_num] <- scale[[v_num]][[AA]]
+      res[v_num] <- VHSE[[v_num]][[AA]]
     }
     return(res)
   }

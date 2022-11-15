@@ -19,6 +19,8 @@ Encode Aligned Peptide Sequences Using the VHSE8 Matrix
 
 examples <- rhoData$data
 
-encode_physchem(examples)
+encode_physchem(examples)[1:5,]
+
+
 
 }

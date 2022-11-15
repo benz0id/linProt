@@ -13,3 +13,16 @@
 #' rhoData
 #' }
 "rhoData"
+
+
+#' The VHSE Scale
+#'
+#' The widely used VHSE scales for encoding protein function.
+#'
+#' @source (Mei et al,. 2005)
+#'
+#' @examples
+#' \dontrun{
+#' VHSE
+#' }
+"VHSE"

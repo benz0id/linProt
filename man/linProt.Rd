@@ -37,7 +37,7 @@ linear models, \textbf{"rhoData"}.
 \examples{
 
 examples <- rhoData$data
-labels <- example_data$labels
+labels <- rhoData$labels
 
 # Shuffle, partition, and encode data set.
 

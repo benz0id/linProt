@@ -22,3 +22,19 @@ default, returning the original unmodified peptide sequences.}
 Randomly shuffles the given dataset before seperating it into two sets which
 are then encoded and ready for use in training a linear model.
 }
+\examples{
+examples <- rhoData$data
+labels <- rhoData$labels
+
+# Shuffle, partition, and encode data set.
+shuffled_datasets <- shuffled_partitions(examples, labels, 650,
+                                         encode=encode_onehot)
+
+train_data <- shuffled_datasets$e1
+train_labels <- shuffled_datasets$l1
+
+valid_data <- shuffled_datasets$e2
+valid_labels <- shuffled_datasets$l2
+
+
+}

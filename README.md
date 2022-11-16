@@ -71,9 +71,9 @@ plot_cost_over_rep(model)
 # Make some predictions.
 results <- predictions(shuffled_datasets$e2, model)
 as.integer(results[1:5])
-#> [1] 545 542 530 570 571
+#> [1] 540 542 559 533 534
 shuffled_datasets$l2[1:5]
-#> [1] 536 520 523 575 542
+#> [1] 549 516 568 492 498
 ```
 
 See the vignettes for a detailed description of the available functions,
@@ -84,15 +84,21 @@ attributes, as well as apply it to protein engineering tasks.
 
 Mei, H., Liao, Z. H., Zhou, Y., & Li, S. Z. (2005). A new set of amino
 acid descriptors and its application in peptide QSARs. Biopolymers,
-80(6), 775–786. u, Y., Verma, D., Sheridan, R. P., Liaw, A., Ma, J.,
-Marshall, N. M., McIntosh, J., Sherer, E. C., Svetnik, V., & Johnston,
-J. M. (2020). Deep Dive into Machine Learning Models for Protein
-Engineering. Journal of Chemical Information and Modeling, 60(6),
-2773–2790. arasuyama, M., Inoue, K., Nakamura, R., Kandori, H., &
-Takeuchi, I. (2018). Understanding Colour Tuning Rules and Predicting
-Absorption Wavelengths of Microbial Rhodopsins by Data-Driven
-Machine-Learning Approach. Scientific Reports, 8(1). edbrook, C. N.,
-Yang, K. K., Robinson, J. E., Mackey, E. D., Gradinaru, V., & Arnold, F.
-H. (2019). Machine learning-guided channelrhodopsin engineering enables
-minimally invasive optogenetics. Nature Methods, 16(11), 1176–1184.
-\href{<https://doi.org/10.1038/s41592-019-0583-8>}
+80(6), 775–786. <https://doi.org/10.1002/bip.20296>
+
+Xu, Y., Verma, D., Sheridan, R. P., Liaw, A., Ma, J., Marshall, N. M.,
+McIntosh, J., Sherer, E. C., Svetnik, V., & Johnston, J. M. (2020). Deep
+Dive into Machine Learning Models for Protein Engineering. Journal of
+Chemical Information and Modeling, 60(6), 2773–2790.
+<https://doi.org/10.1021/acs.jcim.0c00073>
+
+Karasuyama, M., Inoue, K., Nakamura, R., Kandori, H., & Takeuchi, I.
+(2018). Understanding Colour Tuning Rules and Predicting Absorption
+Wavelengths of Microbial Rhodopsins by Data-Driven Machine-Learning
+Approach. Scientific Reports, 8(1).
+<https://doi.org/10.1038/s41598-018-33984-w>
+
+Bedbrook, C. N., Yang, K. K., Robinson, J. E., Mackey, E. D., Gradinaru,
+V., & Arnold, F. H. (2019). Machine learning-guided channelrhodopsin
+engineering enables minimally invasive optogenetics. Nature Methods,
+16(11), 1176–1184. ://doi.org/10.1038/s41592-019-0583-8

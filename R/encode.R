@@ -1,5 +1,3 @@
-
-
 #' Shuffle, Partition, and Encode Datasets.
 #'
 #' Randomly shuffles the given dataset before seperating it into two sets which

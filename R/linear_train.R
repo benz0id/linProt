@@ -27,7 +27,7 @@ predict_linearised <- function(X, w){
 #'
 #' @param model The model to perform the prediction.
 #'
-#' @returns Vecotr of double predictions.
+#' @returns Vector of double predictions.
 #'
 #' @examples
 #'
@@ -44,11 +44,11 @@ predict_linearised <- function(X, w){
 #'                       shuffled_datasets$e2,
 #'                       shuffled_datasets$l2)
 #'
-#' predict(shuffled_datasets$e1[50:100, ,], model)
+#' predictions(shuffled_datasets$e1[50:100, ,], model)
 #'
 #' @export
 #' @import assertthat
-predict <- function(X, model){
+predictions <- function(X, model){
   # Reduce rank and add biases.
   X_lin <- reduce_input_dim(X)
   w <- model$weights
@@ -147,7 +147,7 @@ mse <- function(y, t){
 #'                       learning_rate = 0.001
 #'                       )
 #'
-#' predict(shuffled_datasets$e1[50:100, ,], model)
+#' predictions(shuffled_datasets$e1[50:100, ,], model)
 #'
 #' @export
 #' @import assert

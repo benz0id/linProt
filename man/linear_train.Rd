@@ -70,6 +70,6 @@ model <- linear_train(train_data = shuffled_datasets$e1,
                       learning_rate = 0.001
                       )
 
-predict(shuffled_datasets$e1[50:100, ,], model)
+predictions(shuffled_datasets$e1[50:100, ,], model)
 
 }

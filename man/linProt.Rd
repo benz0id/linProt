@@ -20,7 +20,7 @@ The linProt package provides 10 functions:
 \item encode_onehot
 \item encode_physchem
 \item linear_train
-\item predict
+\item predictions
 \item maximal_sequence
 \item plot_cost_over_rep
 \item property_effect_heatmap
@@ -61,7 +61,7 @@ residue_effect_heatmap(model, 380, 410)
 
 plot_cost_over_rep(model)
 
-results <- predict(valid_data, model)
+results <- predictions(valid_data, model)
 
 }
 \references{

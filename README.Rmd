@@ -71,7 +71,7 @@ residue_effect_heatmap(model, 380, 410)
 plot_cost_over_rep(model)
 
 # Make some predictions.
-results <- predict(shuffled_datasets$e2, model)
+results <- predictions(shuffled_datasets$e2, model)
 as.integer(results[1:5])
 shuffled_datasets$l2[1:5]
 ```

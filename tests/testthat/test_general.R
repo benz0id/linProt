@@ -216,7 +216,7 @@ test_that("new sequence is maximal", {
   max_seq <- maximal_sequence(model)
   encoded_max_seq <- encode_onehot(list(max_seq))
 
-  func <- predict(encoded_max_seq, model)
+  func <- predictions(encoded_max_seq, model)
 
   expect_gt(func, max(rhoData$labels))
 
@@ -224,7 +224,7 @@ test_that("new sequence is maximal", {
   min_seq <- maximal_sequence(model, do_min = TRUE)
   encoded_min_seq <- encode_onehot(list(min_seq))
 
-  func <- predict(encoded_min_seq, model)
+  func <- predictions(encoded_min_seq, model)
 
   expect_lt(func,  min(rhoData$labels))
 })

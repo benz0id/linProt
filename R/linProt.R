@@ -14,7 +14,7 @@
 #'   \item encode_onehot
 #'   \item encode_physchem
 #'   \item linear_train
-#'   \item predict
+#'   \item predictions
 #'   \item maximal_sequence
 #'   \item plot_cost_over_rep
 #'   \item property_effect_heatmap
@@ -54,7 +54,7 @@
 #'
 #' plot_cost_over_rep(model)
 #'
-#' results <- predict(valid_data, model)
+#' results <- predictions(valid_data, model)
 #'
 #' @references
 #' Mei, H., Liao, Z. H., Zhou, Y., & Li, S. Z. (2005). A new set of amino acid

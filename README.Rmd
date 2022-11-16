@@ -58,8 +58,8 @@ shuffled_datasets <- shuffled_partitions(examples, labels, num_p1 = 650,
                                         encode=encode_onehot)
 
 # Train a linear model to perform regression.
-model <- linear_train(test_data = shuffled_datasets$e1,
-                      test_labels = shuffled_datasets$l1,
+model <- linear_train(train_data = shuffled_datasets$e1,
+                      train_labels = shuffled_datasets$l1,
                       valid_data = shuffled_datasets$e2,
                       valid_labels = shuffled_datasets$l2)
 

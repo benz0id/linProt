@@ -26,12 +26,6 @@ install_github("benz0id/linProt")
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
-library(linProt)
-#> 
-#> Attaching package: 'linProt'
-#> The following object is masked from 'package:stats':
-#> 
-#>     predict
 data(rhoData)
 
 examples <- rhoData$data
@@ -57,8 +51,6 @@ residue_effect_heatmap(model, 380, 410)
 
 ``` r
 plot_cost_over_rep(model)
-#> Warning: Ignoring unknown aesthetics: line
-#> Ignoring unknown aesthetics: line
 
 # Make some predictions.
 results <- predict(shuffled_datasets$e2, model)

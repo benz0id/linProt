@@ -6,9 +6,6 @@
 # * https://r-pkgs.org/tests.html
 # * https://testthat.r-lib.org/reference/test_package.html#special-files
 
-library(testthat)
-library(linProt)
-
 test_check("linProt")
 
 # [END]

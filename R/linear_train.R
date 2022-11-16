@@ -153,7 +153,7 @@ mse <- function(y, t){
 #' @import assert
 #' @import assertthat
 #' @import progress
-#' @import stats
+#' @importFrom stats setNames
 linear_train <- function(train_data,
                          train_labels,
                          valid_data,

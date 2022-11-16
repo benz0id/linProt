@@ -43,7 +43,7 @@ test_that("model does not diverge", {
                        valid_data,
                        valid_labels)
 
-  expect_true(min(model$valid_loss) > 2 * max(model$valid_loss))
+  expect_lt(2 * min(model$valid_loss), max(model$valid_loss))
 })
 
 test_that("ridge runs", {
@@ -52,7 +52,7 @@ test_that("ridge runs", {
 
   # Shuffle, partition, and encode data set.
   shuffled_datasets <- shuffled_partitions(examples, labels, 650,
-                                           encode=encode_onehot)
+                                           encode=encode_physchem)
   train_data <- shuffled_datasets$e1
   train_labels <- shuffled_datasets$l1
   valid_data <- shuffled_datasets$e2
@@ -64,7 +64,7 @@ test_that("ridge runs", {
                         valid_data,
                         valid_labels,
                         reg = 'ridge')
-  expect_true(min(model$valid_loss) > 2 * max(model$valid_loss))
+  expect_lt(2 * min(model$valid_loss), max(model$valid_loss))
 })
 
 test_that("lasso runs", {
@@ -73,7 +73,7 @@ test_that("lasso runs", {
 
   # Shuffle, partition, and encode data set.
   shuffled_datasets <- shuffled_partitions(examples, labels, 650,
-                                           encode=encode_onehot)
+                                           encode=encode_physchem)
   train_data <- shuffled_datasets$e1
   train_labels <- shuffled_datasets$l1
   valid_data <- shuffled_datasets$e2
@@ -84,8 +84,9 @@ test_that("lasso runs", {
                         train_labels,
                         valid_data,
                         valid_labels,
-                        reg = 'lasso')
-  expect_lt(2 * max(model$valid_loss), min(model$valid_loss))
+                        reg = 'lasso',
+                        learning_rate = 0.001)
+  expect_lt(2 * min(model$valid_loss), max(model$valid_loss))
 })
 
 test_that("elastic runs", {
@@ -94,7 +95,7 @@ test_that("elastic runs", {
 
   # Shuffle, partition, and encode data set.
   shuffled_datasets <- shuffled_partitions(examples, labels, 650,
-                                           encode=encode_onehot)
+                                           encode=encode_physchem)
   train_data <- shuffled_datasets$e1
   train_labels <- shuffled_datasets$l1
   valid_data <- shuffled_datasets$e2
@@ -105,8 +106,9 @@ test_that("elastic runs", {
                         train_labels,
                         valid_data,
                         valid_labels,
-                        reg = 'lasso')
-  xpect_lt(2 * max(model$valid_loss), min(model$valid_loss))
+                        reg = 'lasso',
+                        learning_rate = 0.001)
+  expect_lt(2 * min(model$valid_loss), max(model$valid_loss))
 })
 
 test_that("model can diverge, gradients correct", {
@@ -136,7 +138,7 @@ test_that("predictions 5 times better than random for quick model", {
 
   # Shuffle, partition, and encode data set.
   shuffled_datasets <- shuffled_partitions(examples, labels, 650,
-                                           encode=encode_onehot)
+                                           encode=encode_physchem)
   train_data <- shuffled_datasets$e1
   train_labels <- shuffled_datasets$l1
   valid_data <- shuffled_datasets$e2
@@ -224,7 +226,7 @@ test_that("new sequence is maximal", {
 
   func <- predict(encoded_min_seq, model)
 
-  expect_gt(func,  min(rhoData$labels))
+  expect_lt(func,  min(rhoData$labels))
 })
 
 # [END]

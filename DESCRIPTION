@@ -1,6 +1,6 @@
 Package: linProt
 Type: Package
-Title: Train Liner Model to Predict Continouslty Distributed Protein Functions
+Title: Train Linear Model to Predict Continouslty Distributed Protein Function
 Version: 0.1.0
 Author: Ben Tudor Price
 Maintainer: Ben Tudor Price <benjamin.tudorprice@mail.utoronto.ca>

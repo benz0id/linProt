@@ -177,8 +177,8 @@ plot_cost_over_rep <- function(model){
                               valid_cost = log(model$valid_losses))
 
   ggplot(progress_data, aes(x=iteration, color=dataset)) +
-    geom_line(aes(x=iteration, y=valid_cost, colour='validation', line='Validation Set')) +
-    geom_line(aes(x=iteration, y=train_cost, colour='training', line='Training Set')) +
+    geom_line(aes(x=iteration, y=valid_cost, colour='validation')) +
+    geom_line(aes(x=iteration, y=train_cost, colour='training')) +
     labs(title="Change in Cost Through Gradient Descent",
          x="Iteration", y = "Log Cost")
 

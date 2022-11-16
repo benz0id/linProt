@@ -181,8 +181,6 @@ plot_cost_over_rep <- function(model){
     geom_line(aes(x=iteration, y=train_cost, colour='training')) +
     labs(title="Change in Cost Through Gradient Descent",
          x="Iteration", y = "Log Cost")
-
-  return(invisible(NULL))
 }
 
 # [END]

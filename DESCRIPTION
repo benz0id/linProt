@@ -1,6 +1,6 @@
 Package: linProt
 Type: Package
-Title: Train Liner Model to Predcit Continouslty Distributed Protein Functions
+Title: Train Liner Model to Predict Continouslty Distributed Protein Functions
 Version: 0.1.0
 Author: Ben Tudor Price
 Maintainer: Ben Tudor Price <benjamin.tudorprice@mail.utoronto.ca>
@@ -20,11 +20,7 @@ Imports:
     gplots,
     assertthat,
     assert,
-    testthat,
     progress,
-    seqinr,
-    knitr,
-    tidyverse,
     stats
 URL: https://github.com/benz0id/linProt
 Depends: 

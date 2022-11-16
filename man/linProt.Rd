@@ -35,7 +35,6 @@ linear models, "rhoData".
 }
 
 \examples{
-
 examples <- rhoData$data
 labels <- rhoData$labels
 
@@ -68,13 +67,13 @@ results <- predict(valid_data, model)
 \references{
 Mei, H., Liao, Z. H., Zhou, Y., & Li, S. Z. (2005). A new set of amino acid
 descriptors and its application in peptide QSARs. Biopolymers, 80(6),
-775–786. \href{https://doi.org/10.1002/bip.20296}
+775–786. https://doi.org/10.1002/bip.20296
 
 Xu, Y., Verma, D., Sheridan, R. P., Liaw, A., Ma, J., Marshall, N. M.,
 McIntosh, J., Sherer, E. C., Svetnik, V., & Johnston, J. M. (2020).
 Deep Dive into Machine Learning Models for Protein Engineering.
 Journal of Chemical Information and Modeling, 60(6), 2773–2790.
-\href{https://doi.org/10.1021/acs.jcim.0c00073}
+https://doi.org/10.1021/acs.jcim.0c00073
 
 Karasuyama, M., Inoue, K., Nakamura, R., Kandori, H., & Takeuchi, I. (2018).
 Understanding Colour Tuning Rules and Predicting Absorption Wavelengths of

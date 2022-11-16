@@ -6,7 +6,10 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-linProtFunc provides a pipeline that allows for that seamless training
+Developed for BCB410 at the University of Toronto, taught by Anjali
+Silva.
+
+This package provides a pipeline that allows for that seamless training
 and evaluation of linear models for protein function prediction from
 user provided labelled AA sequences, including support for regression
 tasks. This package provides visualizations of the patterns learned by
@@ -87,11 +90,26 @@ plot_cost_over_rep(model)
 # Make some predictions.
 results <- predict(shuffled_datasets$e2, model)
 as.integer(results[1:5])
-#> [1] 591 430 536 539 478
+#> [1] 530 399 546 498 533
 shuffled_datasets$l2[1:5]
-#> [1] 606 453 516 540 540
+#> [1] 530 470 537 500 556
 ```
 
 See the vignettes for a detailed description of the available functions,
 which can provide a manner of different visualizations of the model’s
 attributes, as well as apply it to protein engineering tasks.
+
+\##References Mei, H., Liao, Z. H., Zhou, Y., & Li, S. Z. (2005). A new
+set of amino acid descriptors and its application in peptide QSARs.
+Biopolymers, 80(6), 775–786. u, Y., Verma, D., Sheridan, R. P., Liaw,
+A., Ma, J., Marshall, N. M., McIntosh, J., Sherer, E. C., Svetnik, V., &
+Johnston, J. M. (2020). Deep Dive into Machine Learning Models for
+Protein Engineering. Journal of Chemical Information and Modeling,
+60(6), 2773–2790. arasuyama, M., Inoue, K., Nakamura, R., Kandori, H., &
+Takeuchi, I. (2018). Understanding Colour Tuning Rules and Predicting
+Absorption Wavelengths of Microbial Rhodopsins by Data-Driven
+Machine-Learning Approach. Scientific Reports, 8(1). edbrook, C. N.,
+Yang, K. K., Robinson, J. E., Mackey, E. D., Gradinaru, V., & Arnold, F.
+H. (2019). Machine learning-guided channelrhodopsin engineering enables
+minimally invasive optogenetics. Nature Methods, 16(11), 1176–1184.
+\href{<https://doi.org/10.1038/s41592-019-0583-8>}

@@ -19,6 +19,6 @@ Encode Aligned Peptide Sequences into a One-hot Matrix
 
 examples <- rhoData$data
 
-encode_onehot(examples)
+encoded_enamples <- encode_onehot(examples)
 
 }

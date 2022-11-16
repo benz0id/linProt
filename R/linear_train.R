@@ -35,7 +35,7 @@ predict_linearised <- function(X, w){
 #' labels <- rhoData$labels
 #'
 #' shuffled_datasets <- shuffled_partitions(examples, labels, 650,
-#'                                          encode=encode_physiochemical)
+#'                                          encode=encode_physchem)
 #'
 #' # Train a linear model to perform regression.
 #'
@@ -44,7 +44,7 @@ predict_linearised <- function(X, w){
 #'                       shuffled_datasets$e2,
 #'                       shuffled_datasets$l2)
 #'
-#' predict(examples[1, ,], model)
+#' predict(shuffled_datasets$e1[50:100, ,], model)
 #'
 #' @export
 #' @import assertthat
@@ -106,7 +106,7 @@ mse <- function(y, t){
 #'
 #' @param valid_data Rank 3 encoded array of aligned protein sequences.
 #'
-#' @param train_labels Numeric vector of labels for each of the given validation
+#' @param valid_labels Numeric vector of labels for each of the given validation
 #' examples.
 #'
 #' @param reg c('elastic, ridge, lasso'), elastic by default. Specified the
@@ -117,7 +117,8 @@ mse <- function(y, t){
 #' be used in regularization. Both 0.01 by default.
 #'
 #' @param num_iter The integer number of iterations to be performed during gradient
-#' descent. 1000 by default.
+#' descent. 1000 by default. Higher values often lead to more performant models,
+#' but can also lead to overfitting.
 #'
 #' @param rec_loss_every Integer. The program will record the cost on the training set
 #' every <rec_loss_every> iterations.
@@ -133,12 +134,12 @@ mse <- function(y, t){
 #' labels <- rhoData$labels
 #'
 #' shuffled_datasets <- shuffled_partitions(examples, labels, 650,
-#'                                          encode=encode_physiochemical)
+#'                                          encode=encode_physchem)
 #'
-#' model <- linear_train(shuffled_datasets$e1,
-#'                       shuffled_datasets$l1,
-#'                       shuffled_datasets$e2,
-#'                       shuffled_datasets$l2,
+#' model <- linear_train(train_data = shuffled_datasets$e1,
+#'                       train_labels = shuffled_datasets$l1,
+#'                       valid_data = shuffled_datasets$e2,
+#'                       valid_labels = shuffled_datasets$l2,
 #'                       reg = 'ridge',
 #'                       reg_hypers = setNames(c(0.001, 0.001), c("l1", "l2")),
 #'                       num_iter = 1000,
@@ -146,12 +147,13 @@ mse <- function(y, t){
 #'                       learning_rate = 0.001
 #'                       )
 #'
-#' predict(examples[50:100, ,], model)
+#' predict(shuffled_datasets$e1[50:100, ,], model)
 #'
 #' @export
 #' @import assert
 #' @import assertthat
 #' @import progress
+#' @import stats
 linear_train <- function(train_data,
                          train_labels,
                          valid_data,

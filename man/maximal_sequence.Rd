@@ -4,13 +4,13 @@
 \alias{maximal_sequence}
 \title{Produce a Sequence to Optimize a Given Function}
 \usage{
-maximal_sequence(model, min = FALSE)
+maximal_sequence(model, do_min = FALSE)
 }
 \arguments{
 \item{model}{The model as learned by linear_train. This model must have
 been trained on one-hot encoding.}
 
-\item{min}{Whether to change behaviour to instead minimise the protein
+\item{do_min}{Whether to change behaviour to instead minimise the protein
 function.}
 }
 \value{

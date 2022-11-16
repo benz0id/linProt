@@ -37,12 +37,12 @@ shuffled_datasets <- shuffled_partitions(examples, labels, 650,
 
 # Train a linear model to perform regression.
 
-\dontrun{
+
 model <- linear_train(shuffled_datasets$e1,
                       shuffled_datasets$l1,
                       shuffled_datasets$e2,
                       shuffled_datasets$l2)
-}
+
 
 residue_effect_heatmap(model)
 

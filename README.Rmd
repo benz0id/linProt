@@ -30,7 +30,9 @@ functional characteristics.
 You can install the development version of linProt like so:
 
 ``` r
-install_github("benz0id/linProt")
+# install.packages("devtools")
+devtools::install_github("benz0id/linProt", build_vignettes = TRUE)
+library("benz0id/linProt")
 ```
 
 ## Example

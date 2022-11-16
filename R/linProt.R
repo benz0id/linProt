@@ -23,7 +23,7 @@
 #'
 #' @section linProt data:
 #' The linProt packages also provides a basic dataset for the training of
-#' linear models, \textbf{"rhoData"}.
+#' linear models, "rhoData".
 #'
 #' @author {Benjamin Tudor Price, \email{bejamin.tudorprice@mail.utoronto.ca}. }
 #'
@@ -33,7 +33,6 @@
 #' labels <- rhoData$labels
 #'
 #' # Shuffle, partition, and encode data set.
-#'
 #' shuffled_datasets <- shuffled_partitions(examples, labels, 650,
 #'                                          encode=encode_onehot)
 #'
@@ -44,24 +43,21 @@
 #' valid_labels <- shuffled_datasets$l2
 #'
 #' # Train a linear model to perform regression.
-#'
-#' \dontrun{
 #' model <- linear_train(train_data,
 #'                       train_labels,
 #'                       valid_data,
 #'                       valid_labels)
-#' }
+#'
 #'
 #' # View the expected influence of each residue on the function, (lambda max
 #' # in this case).
-#'
 #' residue_effect_heatmap(model, 380, 410)
 #'
 #' plot_cost_over_rep(model)
 #'
 #' results <- predict(valid_data, model)
-#' @references
 #'
+#' @references
 #' Mei, H., Liao, Z. H., Zhou, Y., & Li, S. Z. (2005). A new set of amino acid
 #' descriptors and its application in peptide QSARs. Biopolymers, 80(6),
 #' 775–786. \href{https://doi.org/10.1002/bip.20296}

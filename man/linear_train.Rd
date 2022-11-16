@@ -19,10 +19,13 @@ linear_train(
 \arguments{
 \item{train_data}{Rank 3 array of encoded aligned protein sequences.}
 
-\item{train_labels}{Numeric vector of labels for each of the given validation
+\item{train_labels}{Numeric vector of labels for each of the given training
 examples.}
 
 \item{valid_data}{Rank 3 encoded array of aligned protein sequences.}
+
+\item{valid_labels}{Numeric vector of labels for each of the given validation
+examples.}
 
 \item{reg}{c('elastic, ridge, lasso'), elastic by default. Specified the
 regularization technique to be used. Appropriate regularization
@@ -32,7 +35,8 @@ hyperparameters must be defined.}
 be used in regularization. Both 0.01 by default.}
 
 \item{num_iter}{The integer number of iterations to be performed during gradient
-descent. 1000 by default.}
+descent. 1000 by default. Higher values often lead to more performant models,
+but can also lead to overfitting.}
 
 \item{rec_loss_every}{Integer. The program will record the cost on the training set
 every <rec_loss_every> iterations.}
@@ -53,12 +57,12 @@ examples <- rhoData$data
 labels <- rhoData$labels
 
 shuffled_datasets <- shuffled_partitions(examples, labels, 650,
-                                         encode=encode_physiochemical)
+                                         encode=encode_physchem)
 
-model <- linear_train(shuffled_datasets$e1,
-                      shuffled_datasets$l1,
-                      shuffled_datasets$e2,
-                      shuffled_datasets$l2,
+model <- linear_train(train_data = shuffled_datasets$e1,
+                      train_labels = shuffled_datasets$l1,
+                      valid_data = shuffled_datasets$e2,
+                      valid_labels = shuffled_datasets$l2,
                       reg = 'ridge',
                       reg_hypers = setNames(c(0.001, 0.001), c("l1", "l2")),
                       num_iter = 1000,
@@ -66,6 +70,6 @@ model <- linear_train(shuffled_datasets$e1,
                       learning_rate = 0.001
                       )
 
-predict(examples[50:100, ,], model)
+predict(shuffled_datasets$e1[50:100, ,], model)
 
 }

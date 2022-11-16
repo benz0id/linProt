@@ -14,7 +14,7 @@ An object of class \code{list} of length 2.
 rhoData
 }
 \description{
-A dataset containing the \lambda max values for several channel rhodopsin
+A dataset containing the lambda max values for several channel rhodopsin
 variants as compiled for use in machine learning.
 }
 \details{

@@ -19,16 +19,16 @@ examples <- rhoData$data
 labels <- rhoData$labels
 
 shuffled_datasets <- shuffled_partitions(examples, labels, 650,
-                                         encode=encode_physiochemical)
+                                         encode=encode_physchem)
 
 # Train a linear model to perform regression.
 
-\dontrun{
+
 model <- linear_train(shuffled_datasets$e1,
                       shuffled_datasets$l1,
                       shuffled_datasets$e2,
                       shuffled_datasets$l2)
-}
+
 
 plot_cost_over_rep(model)
 

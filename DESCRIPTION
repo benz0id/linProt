@@ -24,7 +24,8 @@ Imports:
     progress,
     seqinr,
     knitr,
-    tidyverse
+    tidyverse,
+    stats
 URL: https://github.com/benz0id/linProt
 Depends: 
     R (>= 2.10)

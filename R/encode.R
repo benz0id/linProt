@@ -80,7 +80,7 @@ strs_to_matrix <- function(strs){
 #'
 #' examples <- rhoData$data
 #'
-#' encode_onehot(examples)
+#' encoded_enamples <- encode_onehot(examples)
 #'
 #' @export
 #' @import assertthat
@@ -123,9 +123,7 @@ encode_onehot <- function(AA_seqs){
 #'
 #' examples <- rhoData$data
 #'
-#' encode_physchem(examples)[1:5,]
-#'
-#'
+#' encoded_examples <- encode_physchem(examples)
 #'
 #' @export
 #' @import assertthat

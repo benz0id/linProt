@@ -12,17 +12,18 @@
 #' @param model The model as learned by linear_train. This model must have
 #' been trained on one-hot encoding.
 #'
-#' @param min Whether to change behaviour to instead minimise the protein
+#' @param do_min Whether to change behaviour to instead minimise the protein
 #' function.
 #'
 #' @return A character representation of the best peptide.
 #'
-#'
 #' @export
-maximal_sequence <- function(model, min = FALSE){
+maximal_sequence <- function(model, do_min = FALSE){
   w <- model$weights
 
-  if (min){
+  assert(dim(w)[2] == 20)
+
+  if (do_min){
     fxn <- min
   } else{
     fxn <- max

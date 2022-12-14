@@ -17,24 +17,57 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 <!-- badges: end -->
-Developed for BCB410 at the University of Toronto, taught by Anjali Silva.
+## Description
 
-This package provides a pipeline that allows for that seamless training and
-evaluation of linear models for protein function prediction from user
-provided labelled AA sequences, including support for regression  tasks.
-This package provides visualizations of the patterns learned by the linear
-models which can be used to generate novel proteins with optimised
-functional characteristics.
+This package provides a pipeline that allows for that training
+and evaluation of linear models for protein function prediction from
+user provided labelled AA sequences. This package provides visualizations of the patterns learned by the linear models and provides functions that can be used to generate novel proteins with optimised functional characteristics.
 
 ## Installation
-
-You can install the development version of linProt like so:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("benz0id/linProt", build_vignettes = TRUE)
-library("benz0id/linProt")
+library("linProt")
 ```
+
+## Overview
+
+``` r
+ls("package:linProt")
+data(package = "linProt")
+browseVignettes("linProt")
+```
+This package works with continuously distributed protein functional characteristics, such as peak light absorption wavelength or fluorescence.
+
+In the context of protein function prediction, linear models assign weights to each of the amino acid positions along an alignment. We can interpret these weights to gain insight into how residues contribute to the protein's function and use the model to make predictions on unseen sequences.
+
+This model takes a list of aligned amino acid sequences, each with a label denoting their experimentally determined function. These sequences are then encoded as either as A x 20 one hot matricies (where A is the number of residues in the aligned protein) or as A x 8 matricies, using the VHSE8 scores of each residue. After being partitioned into training and validation sets, these encoded data are then used to train a regularised linear model.
+
+This trained linear model can be used for the function prediction of novel sequences, the design of maximally or minimally functional proteins, or to gain insight into the functional characteristics of the protein.
+
+In order to achieve this, the package implements 8 functions that can be ordered form a modular pipeline. These include:
+
+__*shuffled_partitions*__ - Shuffle, partition, and encode the supplied peptide alignment using one of the following encoding functions
+
+__*encode_onehot*__ - Encode a peptide alignment as a tensor of one-hot vectors.
+
+__*encode_physchem*__ - Encode a peptide alignment as a tensor of vectors encoded by the VHSE matrix.
+
+__*linear_train*__ - Train and return a linear model that predicts protein function on using some training and validation data given some hyperparameters.
+
+__*predictions*__ - Use a linear model to make function predictions for some aligned peptide sequences.
+
+__*maximal_sequence*__ - Create a peptide that would have the maximum (or minimum) possible function as predicted by some model.
+
+__*plot_cost_over_rep*__ - Show the change in cost over the duration of some linear model's training cycles. Helpful for discovering overfitting.
+
+__*property_effect_heatmap*__ - Using the weights supplied by a model trained on VHSE8 encoded peptides, show the learned effect of each VHSE on protein function.
+
+__*residue_effect_heatmap*__ - Using the weights supplied by a model trained on one hot encoded peptides, show the learned effects that having any given residue at any given position will have on protein function.
+
+
+![](./inst/extdata/diagram.png)
 
 ## Example
 
@@ -80,6 +113,16 @@ See the vignettes for a detailed description of the available functions, which
 can provide a manner of different visualizations of the model's attributes,
 as well as apply it to protein engineering tasks.
 
+
+## Contributions
+
+This package was written by Benjamin Tudor Price. The R package `ggplot2` was used for visualization of gradient descent progress in the *plot_cost_over_rep* function. The R package  `gplots` was used to visualise the learned weights using a heatmap for the *property_effect_heatmap* and *residue_effect_heatmap* functions. The R packages `assertthat` and `assert` were used to check user input throughout the project. In the function *linear_train*, The R package `progess` was used to produce an informative progress bar. The R package `stats` was also used in *linear_train* in order to help format variables. The `shiny` package was used to develop the shiny app.
+
+
+The included dataset used algined sequence data published by (Karasuyama et al., 2018)
+
+The VHSE matrix used (VHSE8) was originally released by (Mei et al., 2005)
+
 ## References
 
 Mei, H., Liao, Z. H., Zhou, Y., & Li, S. Z. (2005). A new set of amino acid
@@ -101,5 +144,35 @@ Bedbrook, C. N., Yang, K. K., Robinson, J. E., Mackey, E. D., Gradinaru, V.,
 & Arnold, F. H. (2019). Machine learning-guided channelrhodopsin engineering
 enables minimally invasive optogenetics. Nature Methods, 16(11), 1176–1184.
 \hrefhttps://doi.org/10.1038/s41592-019-0583-8
+
+H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York,
+  2016.
+
+Warnes G, Bolker B, Bonebakker L, Gentleman R, Huber W, Liaw A, Lumley T, Maechler M,
+  Magnusson A, Moeller S, Schwartz M, Venables B (2022). _gplots: Various R Programming
+  Tools for Plotting Data_. R package version 3.1.3,
+  <https://CRAN.R-project.org/package=gplots>.
+  
+Wickham H (2019). _assertthat: Easy Pre and Post Assertions_. R package version
+  0.2.1, <https://CRAN.R-project.org/package=assertthat>.
+  
+Binette O (2020). _assert: Validate Function Arguments_. R package version 1.0.1,
+  <https://CRAN.R-project.org/package=assert>.
+  
+Csárdi G, FitzJohn R (2019). _progress: Terminal Progress Bars_. R package version
+  1.2.2, <https://CRAN.R-project.org/package=progress>.
+
+R Core Team (2022). R: A language and environment for statistical computing. R
+  Foundation for Statistical Computing, Vienna, Austria. URL
+  https://www.R-project.org/.
+  
+Yihui Xie (2022). knitr: A General-Purpose Package for Dynamic Report Generation in
+  R. R package version 1.40.
+
+## Ackowledgements
+
+This package was developed as part of an assessment for 2022 BCB410H: Applied Bioinformatics course at the University of Toronto, Toronto, CANADA. `linProt` welcomes issues,
+enhancement requests, and other contributions. This package was improved by the advice of my peers and Anjali Silva. To submit an issue, use the GitHub issues.
+
 
 

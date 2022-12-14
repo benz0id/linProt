@@ -1,18 +1,21 @@
 #' Shuffle, Partition, and Encode Datasets.
 #'
 #' Randomly shuffles the given dataset before seperating it into two sets which
-#' are then encoded and ready for use in training a linear model.
+#' are then encoded and ready for use to train a linear model.
 #'
-#' @param examples A list of aligned peptide sequences.
+#' @param examples A list of aligned amino acid sequences.
 #'
-#' @param labels The continuously distributed function for each of the given
-#' examples.
+#' @param labels A list of floating point numbers representing the
+#' experimentally derived protein function for each example sequence.
 #'
 #' @param num_p1 The number of examples to put the in the first dataset. The
-#' remainder will be put in the second dataset.
+#' remainder will be put in the second dataset. This should be greater than 0
+#' and less than or equal to the number of eaxamples in the given dataset.
 #'
 #' @param encode Function to be used to encode the given examples. NULL by
-#' default, returning the original unmodified peptide sequences.
+#' default, returning the original unmodified peptide sequences. The two
+#' encoding functions provided by this package are `encode_onehot` and
+#' `encode_physchem`.
 #'
 #'
 #' @examples
@@ -34,16 +37,19 @@
 shuffled_partitions <- function(examples, labels, num_p1, encode=NULL){
   num_examples <- length(labels)
 
+  # Shuffle the data.
   inds <- sample(1:num_examples, num_examples)
 
   examples <- examples[inds]
   labels <- labels[inds]
 
+  # Partition the data.
   p1_examples <- examples[1:num_p1]
   p1_labels <- labels[1:num_p1]
   p2_examples <- examples[(1 + num_p1):num_examples]
   p2_labels <- labels[(1 + num_p1):num_examples]
 
+  # Encode the data.
   if (! is.null(encode)){
     p1_examples <- encode(p1_examples)
     p2_examples <- encode(p2_examples)
@@ -54,10 +60,10 @@ shuffled_partitions <- function(examples, labels, num_p1, encode=NULL){
   return(rtrn)
 }
 
-# Helper for encoding funcitons.
+# Helper for encoding functions.
 strs_to_matrix <- function(strs){
   assert_that(is.list(strs))
-
+  # Convert list of strings to matrix of characters.
   strs_split <- lapply(strs, strsplit, split="")
   strs_split <- lapply(strs_split, unlist)
   strs_vecs <- as.vector(strs_split)
@@ -68,28 +74,37 @@ strs_to_matrix <- function(strs){
 }
 
 
-#' Encode Aligned Peptide Sequences into a One-hot Matrix
+#' Encode a list of aligned AA sequences into a tensor of one-hot encodings.
 #'
-#' @param AA_seqs List of aligned character sequences.
+#' @param AA_seqs A list of aligned peptides. Represented as a list of character
+#' vectors.
 #'
-#' @return Rank 3 array of peptide sequence encodings.
+#' @return Rank 3 array of all peptide sequence encodings. i.e. an array of
+#' peptide sequence encodings.
 #'
 #' @examples
 #'
 #' examples <- rhoData$data
 #'
-#' encoded_enamples <- encode_onehot(examples)
+#' encoded_examples <- encode_onehot(examples)
 #'
 #' @export
 #' @import assertthat
 encode_onehot <- function(AA_seqs){
+
+  assert_that(is.list(AA_seqs))
+  assert_that(all(unlist(lapply(AA_seqs, nchar))==nchar(AA_seqs[[1]])),
+              msg="Aligned sequeces must have the same length.")
+
+
+  # Create list of amino acids (ordered alphabetically) to index the one-hot
+  # representation.
   num_AAs <- 20
   Amino_acids <- unlist(strsplit("ACDEFGHIKLMNPQRSTVWY", ''))
   AAs_to_num <- as.list(1:20)
   names(AAs_to_num) = Amino_acids
 
-  assert_that(is.list(AA_seqs))
-
+  # Convert to character matrix representation.
   AA_matrix <- strs_to_matrix(AA_seqs)
 
   num_seqs <- length(AA_seqs)
@@ -97,6 +112,8 @@ encode_onehot <- function(AA_seqs){
 
   one_hot_array <- array(0L, dim= c(num_seqs, num_residues, num_AAs))
 
+  # For each amino acid in each peptide, add a one at the appropriate position
+  # in the one-hot representation.
   for (x_ind in seq(num_seqs)){
     for (aa_ind in seq(num_residues)){
       AA <- toupper(AA_matrix[x_ind, aa_ind])
@@ -113,15 +130,18 @@ encode_onehot <- function(AA_seqs){
 
 #' Encode Aligned Peptide Sequences Using the VHSE8 Matrix
 #'
-#' @param AA_seqs List of aligned character sequences.
+#' @param AA_seqs  A list of aligned peptides.Represented as a list of character
+#' vectors.
 #'
-#' @return Rank 3 array of peptide sequence encodings.
+#' @return Rank 3 array containing all peptide sequence encodings (rank 2).
+#' i.e. an array of peptide sequence encodings.
 #'
 #' @examples
 #'
 #' examples <- rhoData$data
 #'
 #' encoded_examples <- encode_physchem(examples)
+#' encoded_examples[1]
 #'
 #' @export
 #' @import assertthat

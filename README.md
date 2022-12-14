@@ -76,9 +76,9 @@ plot_cost_over_rep(model)
 # Make some predictions.
 results <- predictions(shuffled_datasets$e2, model)
 as.integer(results[1:5])
-#> [1] 538 506 536 538 526
+#> [1] 445 536 519 533 539
 shuffled_datasets$l2[1:5]
-#> [1] 538 500 522 524 584
+#> [1] 587 548 503 528 548
 ```
 
 See the vignettes for a detailed description of the available functions,

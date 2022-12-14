@@ -35,6 +35,7 @@ linear models, "rhoData".
 }
 
 \examples{
+data(rhoData)
 examples <- rhoData$data
 labels <- rhoData$labels
 

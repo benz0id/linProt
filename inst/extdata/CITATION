@@ -1,0 +1,12 @@
+citHeader("To cite linProt in publications use:")
+
+citEntry(entry = "Unpublished",
+  title        = "linProt",
+  author       = "Benjamin Tudor Price",
+  note         = "Unpublished",
+  year         = "2022",
+
+  textVersion  =
+  paste("Tudor Price, B. (2022) linProt.
+        Unpublished. URL https://github.com/benz0id/linProt.")
+)

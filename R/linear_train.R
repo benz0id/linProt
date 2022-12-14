@@ -1,12 +1,13 @@
 
-# Helper function for training and prediction
+# Helper function for training and prediction.
 reduce_input_dim <- function(examples){
   assert_that(is.array(examples))
 
+  # Convert rank 3 tensor to rank 2 tensor by linearizing 2nd and 3rd into one.
   new_shape <- c(dim(examples)[1], dim(examples)[2] * dim(examples)[3])
   new_examples <- array(examples, dim=new_shape)
 
-  # Add biases column
+  # Add dummy biases column for obtaining intercept.
   new_examples <- cbind(new_examples, 1L)
   return(new_examples)
 }
@@ -20,14 +21,14 @@ predict_linearised <- function(X, w){
 #' Predict a Continuously Distributed Protein Function
 #'
 #' Performs regression using the given, trained model in order to predict
-#' some continuously ditributed protein function.
+#' some continuously distributed protein function.
 #'
-#' @param X A rank 3 collection of rank 2 encodings of protein sequences,
-#' encoded under the same scheme as model.
+#' @param X Encoded protein sequences. A rank 3 tensor containing examples with
+#' the same dimensionality as those used to train the model.
 #'
-#' @param model The model to perform the prediction.
+#' @param model The model used to perform the prediction.
 #'
-#' @returns Vector of double predictions.
+#' @returns Vector of doubles. Predictions for each input example.
 #'
 #' @examples
 #'
@@ -49,18 +50,21 @@ predict_linearised <- function(X, w){
 #' @export
 #' @import assertthat
 predictions <- function(X, model){
-  # Reduce rank and add biases.
+  # Reduce rank of encodings and weights. Add intercept to weights and dummy
+  # biases to examples.
   X_lin <- reduce_input_dim(X)
   w <- model$weights
   dim(w) <- dim(w)[1] * dim(w)[2]
   w <- append(w, model$intercept, length(w))
 
+  # Return the prediction.
   return(predict_linearised(X_lin, w))
 }
 
 # Helper function for training.
 get_deriv <- function(X, w, t){
   y <- predict_linearised(X, w)
+  # Calculate derivatives using MSE as the cost function.
   derivs <- t(X) %*% (y - t)
   return(list(derivs, y))
 }
@@ -69,6 +73,7 @@ get_deriv <- function(X, w, t){
 regularise <- function(l1, l2, w){
   reg_vector <- numeric(length(w))
 
+  # Calculate l1 weight decay.
   if (l1 != 0){
     for (i in seq_along(w)){
       weight <- w[i]
@@ -80,10 +85,13 @@ regularise <- function(l1, l2, w){
         reg_vector[i] <- 0
       }
     }
+  } else {
+    # Do not perform l1 regularization.
   }
 
-  reg_vector <- reg_vector + w
-  # Remove bias adj
+  # Calculate l2 weight decay.
+  reg_vector <- reg_vector + l2 * w
+  # Remove bias adjustment.
   reg_vector[length(reg_vector)] <- 0
   return(reg_vector)
 }
@@ -99,7 +107,7 @@ mse <- function(y, t){
 #' Trains a linear model using gradient descent. Stores the performance on the
 #' training and validations sets throughout the process.
 #'
-#' @param train_data Rank 3 array of encoded aligned protein sequences.
+#' @param train_data Rank 3 array of encoded protein sequences.
 #'
 #' @param train_labels Numeric vector of labels for each of the given training
 #' examples.
@@ -114,7 +122,8 @@ mse <- function(y, t){
 #' hyperparameters must be defined.
 #'
 #' @param reg_hypers Named numeric vector containing the l1 and l2 constants to
-#' be used in regularization. Both 0.01 by default.
+#' be used in regularization. Both 0.01 by default. NOTE: Ensure that l1 and l2
+#' hyperparameters required for chosen regularization are used.
 #'
 #' @param num_iter The integer number of iterations to be performed during gradient
 #' descent. 1000 by default. Higher values often lead to more performant models,
@@ -125,11 +134,19 @@ mse <- function(y, t){
 #'
 #' @param learning_rate The double learning rate for gradient descent.
 #'
-#' @return A trained model, containing interprtable weights that may be used for
-#' prediction of further examples.
+#' @return A list containing the trained model and its hyperparameters,
+#' consisting of:
+#' weights - A matrix containing the learned weights.
+#' intercept - The bias of the model.
+#' train_losses - The total loss of the model on the training set at each step
+#' of gradient descent.
+#' valid_losses - The total loss of the model on the validation set at each step
+#' of gradient descent.
+#' every - Equal to num_iter, used to calculate the number of gradient descent
+#' iterations.
+#'
 #'
 #' @examples
-#'
 #' examples <- rhoData$data
 #' labels <- rhoData$labels
 #'
@@ -147,7 +164,7 @@ mse <- function(y, t){
 #'                       learning_rate = 0.001
 #'                       )
 #'
-#' predictions(shuffled_datasets$e1[50:100, ,], model)
+#' predictions(shuffled_datasets$e1[50:60, ,], model)
 #'
 #' @export
 #' @import assert
@@ -164,24 +181,28 @@ linear_train <- function(train_data,
                          rec_loss_every = 10,
                          learning_rate = 0.01
                          ){
-
-  # Checking for valid input types.
   assert_that(is.array(train_data))
   assert_that(is.vector(train_labels))
   assert_that(is.array(valid_data))
   assert_that(is.vector(valid_labels))
 
+  assert_that(num_iter >= 1)
+  assert_that(rec_loss_every >= 1)
+  assert_that(learning_rate > 0)
+
   encoding_match <- all(dim(train_data)[2:3] == dim(valid_data)[2:3])
-  assert(encoding_match, msg="Encoding between valid and train sets do not
-  match")
+  assert(encoding_match, msg="The training set and validation set do not have
+         the same encoding.")
 
   proper_label_num <- dim(train_data)[1] == length(train_labels) &
     dim(valid_data)[1] == length(valid_labels)
-  assert(proper_label_num, msg="Ensure that the number of labels match for
-              each of the train and valid sets.")
+  assert(proper_label_num, msg="One label must be present for each training and
+         validation example.")
 
   l1 <- 0
   l2 <- 0
+  # Ensure that the user has the defined l1 and l2 hyperparameters properly,
+  # which depend the the regularisation technique specified.
   if(reg =='elastic'){
     right_hypers <- is.null(reg_hypers[["l1"]]) | is.null(reg_hypers[["l2"]])
     assert(!right_hypers, msg="Elastic regularisation requires both l1
@@ -213,6 +234,7 @@ linear_train <- function(train_data,
   N_train <- dim(X_train)[1]
   N_valid <- dim(X_valid)[1]
 
+  # Initilize variables to store training progress info.
   M <- dim(X_train)[2]
 
   train_losses <- numeric(number_losses_to_rec)
@@ -221,10 +243,15 @@ linear_train <- function(train_data,
   w <- numeric(M)
 
   pb <- progress_bar$new(total = num_iter,
-                         format = "  train [:bar] :percent eta: :eta :msg :valid_loss",)
+                         format = "  train [:bar] :percent eta: :eta :msg :valid_loss")
+
+  # Perform gradient descent.
   valid_loss <- 0
   for(i in seq(num_iter)){
+    # Update progress bar.
     pb$tick(tokens = list(msg="Validation Cost:", valid_loss=valid_loss))
+
+    # Compute derivative and update weights.
     res <- get_deriv(X_train, w, train_labels)
     weight_deriv <- res[[1]]
     y <- res[[2]]
@@ -232,22 +259,22 @@ linear_train <- function(train_data,
     reg_values <- regularise(l1, l2, w)
 
     adj <- learning_rate * (weight_deriv + reg_values) / (M + 1)
-
     w <- w - adj
 
     if (NaN %in% w){
       stop('Weights have diverged. Try more conservative hyperparameters.')
     }
-
+    # Record losses every few iterations.
     if (i %% rec_loss_every == 0){
       yv <- predict_linearised(X_valid, w)
-      train_losses[i %/% rec_loss_every] <- mse(y, train_labels)
-      valid_loss <- mse(yv, valid_labels)
+      train_losses[i %/% rec_loss_every] <- (mse(y, train_labels) /
+                                               length(train_labels))
+      valid_loss <- mse(yv, valid_labels) / length(valid_labels)
       valid_losses[i %/% rec_loss_every] <- valid_loss
     }
   }
 
-
+  # Store and return model, metadata, and training progress data.
   intercept <- w[length(w)]
   w <- w[-length(w)]
   dim(w) <- w_final_dim

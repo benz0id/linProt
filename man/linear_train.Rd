@@ -32,7 +32,8 @@ regularization technique to be used. Appropriate regularization
 hyperparameters must be defined.}
 
 \item{reg_hypers}{Named numeric vector containing the l1 and l2 constants to
-be used in regularization. Both 0.01 by default.}
+be used in regularization. Both 0.01 by default. NOTE: Ensure that l1 and l2
+hyperparameters required for chosen regularisation are used.}
 
 \item{num_iter}{The integer number of iterations to be performed during gradient
 descent. 1000 by default. Higher values often lead to more performant models,

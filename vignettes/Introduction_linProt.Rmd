@@ -1,0 +1,225 @@
+---
+title: "A tour of mixGaussian"
+author: "Anjali Silva"
+date: "`r format(Sys.time(), '%d %b %Y')`"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    number_sections: false
+vignette: >
+  %\VignetteIndexEntry{A tour of mixGaussian}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+  
+```{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(
+  fig.align = "center",
+  fig.height = 5.5,
+  fig.width = 6,
+  warning = FALSE,
+  collapse = TRUE,
+  dev.args = list(pointsize = 10),
+  out.width = "90%",
+  par = TRUE
+)
+knit_hooks$set(par = function(before, options, envir)
+{ if(before && options$fig.show != "none") 
+  par(family = "sans", mar=c(4.1,4.1,1.1,1.1), mgp=c(3,1,0), tcl=-0.5)
+})
+set.seed(1) # for exact reproducibility
+```
+
+
+## Introduction
+
+**linProt** is an R package that implements functions that allowing for the training of linear models for predicting continuously distributed protein function attributes (e.g. peak absorbance or melting temperature). 
+
+This trained linear model can be used for the function prediction of novel sequences, the design of maximally or minimally functional proteins, or to gain insight into the functional characteristics of the protein.
+
+In order to achieve this, the package implements 8 functions that can be ordered form a modular pipeline. These include:
+
+__*shuffled_partitions*__ - Shuffle, partition, and encode the supplied peptide alignment using one of the following encoding functions
+
+__*encode_onehot*__ - Encode a peptide alignment as a tensor of one-hot vectors.
+
+__*encode_physchem*__ - Encode a peptide alignment as a tensor of vectors encoded by the VHSE matrix.
+
+__*linear_train*__ - Train and return a linear model that predicts protein function on using some training and validation data given some hyperparameters.
+
+__*predictions*__ - Use a linear model to make function predictions for some aligned peptide sequences.
+
+__*maximal_sequence*__ - Create a peptide that would have the maximum (or minimum) possible function as predicted by some model.
+
+__*plot_cost_over_rep*__ - Show the change in cost over the duration of some linear model's training cycles. Helpful for discovering overfitting.
+
+__*property_effect_heatmap*__ - Using the weights supplied by a model trained on VHSE8 encoded peptides, show the learned effect of each VHSE on protein function.
+
+__*residue_effect_heatmap*__ - Using the weights supplied by a model trained on one hot encoded peptides, show the learned effects that having any given residue at any given position will have on protein function.
+
+See `help(package = "linProt")` for further details and references provided by `citation("linProt")`. To download **linProt**, use the following commands:
+
+``` r
+require("devtools")
+install_github("benz0id/linProt", build_vignettes = TRUE)
+library("linProt")
+```
+To list all functions available in the package:
+``` r
+lsf.str("package:linProt")
+```
+
+<br>
+
+## Details
+
+In the context of protein function prediction, linear models assign weights to each of the amino acid positions along an amino acid alignment. We can interpret these weights to gain insight into how residues contribute to the protein's function and use the model to make predictions on unseen sequences.
+
+This model takes a list of aligned amino acid sequences, each with a label denoting their experimentally determined function. These sequences are then encoded as either as A x 20 one hot matricies (where A is the number of residues in the aligned protein) or as A x 8 matricies, using the VHSE8 scores of each residue. After being partitioned into training and validation sets, these encoded data are then used to train a linear model. This trained linear model can be used for the function prediction of novel sequences, the design of maximally or minimally functional proteins, or to gain insight into the functional characteristics of the protein.
+
+## Linear Models
+
+  Linear models are one of the oldest and simplest machine learning techniques. These models aim to learn patterns in dataset that let them make predictions about unseen data sampled from the same distribution. In order to do this, this implementation stores a set of vector of weights and biases that perform a linear transformation on a vector input.
+
+## Encoding
+
+  Linear models require their input to be a vector of real numbers. In order to use our amino acid sequences as an input, we must encode them into a representation that is purely numeric, but captures the import functional aspects of the peptide. One hot encoding is an effective mean of doing this, wherein a single amino acid is convereted to a one hot vector of length 20 with the 1 index indicating the prescence of the amino acid denoted by that position. For example:
+  
+```r
+# Alphabeticallty sorted amino acids used as keys.
+keys <- unlist(strsplit("ACDEFGHIKLMNPQRSTVWY", ''))
+
+# Encoding for alanine.
+a <- c(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+names(a) <- keys
+print(a)
+
+# Encoding for tyrosine
+w <- c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1)
+names(w) <- keys
+print(w)
+
+```
+
+This can be done for entire alignments. This increases the usually rank two alignment into a rank three array, with each peptide being represented as a matrix. This package implements this functionality in __*encode_onehot*__, as well as encoding by VHSE8 in __*encode_physchem*__. When displayed as a heatmap, the weights learned from a linear model trained one a one-hot encoded datasets can interpreted as the "learned effect" of each amino acid on the protein function. Positive weights at an amino acid position indicate that the prescence of that amino acid drives the function to a higher value, and a weight negative indicates that the amino acid drives the function down (see __*residue_effect_heatmap*__). Similarly, models trained on VHSE8 encoded data learn the effects of physiochemical properteis on the protein function (see __*property_effect_heatmap*__). 
+
+## Training a Model
+
+  After encoding, shuffling and partitioning the dataset using __*shuffled_partitions*__, we have both a training set and validation set which can be used to train the linear model and tune its hyperparameters using __*linear_train*__ which will produces a complete model. The current implementation of this function uses gradient descent to train the model, but future versions will provide the option to use the closed form solution.
+  
+  The model's progress through gradient descent can be visualised using the __*plot_cost_over_rep*__ function, which will show the cost over both the training and validation sets as a function of of the training cycle iteration number. This model can also be provided to the previously mention __*residue_effect_heatmap*__ or __*property_effect_heatmap*__ functions to visualize its properties. Make sure that the model was trained on the correct encoding for use in either of these.
+  
+  Further, this model can also be used to make predictions on unseen data using the __*predictions*__ funciton, which uses a model and encoded amino acid sequences to make predictions.
+  
+## Generating Novel Sequences
+
+  This package also implements __*maximal_sequence*__, a function that uses a model trained on one-hot encoded data to produce the amino acid sequence predicted to have the highest function value. The ability of this model to produce functional proteins has not been tested and it's ability to do is likely highly dependent on the input data. Indel rich training sets sequences will likely result in non functional proteins, as will datasets that contain diversity across many amino acids. This is because the optimization simply chooses the amino acid with the highest weight assigned to it by the model at each position. The behaviour of this funciton can also be reversed to produce protein sequences with minimal function.
+  
+## Example Pipeline
+
+Below, the previously described funcitons have been arranged into a pipeline that uses patterns learned from VHSE8 encoded channel rhodopsin sequences to gain insights into the effect of different physciochemical properties at some residues, as well as design a novel sequence with maximal **predicted** function.
+
+```{r example}
+library(linProt)
+data(rhoData)
+
+# Extract peptide alignment and function labels (peak absorbance) from 
+# the included dataset.
+examples <- rhoData$data
+labels <- rhoData$labels
+
+# Display the first of each.
+examples[1]
+labels[1]
+
+# Shuffle, partition, and encode data set using the VHSE8 matrix.
+shuffled_datasets <- shuffled_partitions(examples, labels, num_p1 = 650,
+                                        encode=encode_physchem)
+
+# Train a linear model to perform regression with default hyperparameters.
+model <- linear_train(train_data = shuffled_datasets$e1,
+                      train_labels = shuffled_datasets$l1,
+                      valid_data = shuffled_datasets$e2,
+                      valid_labels = shuffled_datasets$l2)
+
+# View the expected influence of each residue on the function, (lambda max
+# in this case).
+residue_effect_heatmap(model, 380, 410)
+plot_cost_over_rep(model)
+
+# Make some predictions.
+results <- predictions(shuffled_datasets$e2, model)
+as.integer(results[1:5])
+shuffled_datasets$l2[1:5]
+```
+
+
+### Shiny app for linProt
+The Shiny app allows users to upload protein alignments and functional labels. In order to anayse the data using the above functions.
+
+To launch the Shiny app, use the function `runLinProt``. Run `?runLinProt` to view 
+documentation.
+``` r
+expressionAnalysis::runLinProt()
+```
+
+## Package References
+
+[Tudor Price, B. (2022) linProt Unpublished.](https://github.com/benz0id/linProt)
+
+## Other References
+
+Mei, H., Liao, Z. H., Zhou, Y., & Li, S. Z. (2005). A new set of amino acid
+descriptors and its application in peptide QSARs. Biopolymers, 80(6),
+775–786. https://doi.org/10.1002/bip.20296
+
+Xu, Y., Verma, D., Sheridan, R. P., Liaw, A., Ma, J., Marshall, N. M.,
+McIntosh, J., Sherer, E. C., Svetnik, V., & Johnston, J. M. (2020).
+Deep Dive into Machine Learning Models for Protein Engineering.
+Journal of Chemical Information and Modeling, 60(6), 2773–2790.
+https://doi.org/10.1021/acs.jcim.0c00073
+
+Karasuyama, M., Inoue, K., Nakamura, R., Kandori, H., & Takeuchi, I. (2018).
+Understanding Colour Tuning Rules and Predicting Absorption Wavelengths of
+Microbial Rhodopsins by Data-Driven Machine-Learning Approach. Scientific
+Reports, 8(1). https://doi.org/10.1038/s41598-018-33984-w
+
+Bedbrook, C. N., Yang, K. K., Robinson, J. E., Mackey, E. D., Gradinaru, V.,
+& Arnold, F. H. (2019). Machine learning-guided channelrhodopsin engineering
+enables minimally invasive optogenetics. Nature Methods, 16(11), 1176–1184.
+\hrefhttps://doi.org/10.1038/s41592-019-0583-8
+
+H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York,
+  2016.
+
+Warnes G, Bolker B, Bonebakker L, Gentleman R, Huber W, Liaw A, Lumley T, Maechler M,
+  Magnusson A, Moeller S, Schwartz M, Venables B (2022). _gplots: Various R Programming
+  Tools for Plotting Data_. R package version 3.1.3,
+  <https://CRAN.R-project.org/package=gplots>.
+  
+Wickham H (2019). _assertthat: Easy Pre and Post Assertions_. R package version
+  0.2.1, <https://CRAN.R-project.org/package=assertthat>.
+  
+Binette O (2020). _assert: Validate Function Arguments_. R package version 1.0.1,
+  <https://CRAN.R-project.org/package=assert>.
+  
+Csárdi G, FitzJohn R (2019). _progress: Terminal Progress Bars_. R package version
+  1.2.2, <https://CRAN.R-project.org/package=progress>.
+
+R Core Team (2022). R: A language and environment for statistical computing. R
+  Foundation for Statistical Computing, Vienna, Austria. URL
+  https://www.R-project.org/.
+  
+Yihui Xie (2022). knitr: A General-Purpose Package for Dynamic Report Generation in
+  R. R package version 1.40.
+
+----
+
+```{r}
+sessionInfo()
+```
+
+
+
+

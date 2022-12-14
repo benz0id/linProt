@@ -1,12 +1,14 @@
 #' Channel Rhodopsins and Their Peak Absorbation Values.
 #'
-#' A dataset containing the lambda max values for several channel rhodopsin
-#' variants as compiled for use in machine learning.
+#' The peak absorbation frequencies for a number of channel rhodopsins were
+#' provided by (Karasuyama et al., 2018). We can treat these data as a set of
+#' examples and thier respectives labels. This dataset was produced by aligning
+#' the amino acid sequences of these proteins (using CLUSTAL OMEGA).
 #'
-#' The cooresponding sequences were then aligned using the CLUSTAL OMEGA
-#' alogrithm
+#' This dataset can be substituted for any list of aligned protein sequences and
+#' float values representing some functional property of those proteins.
 #'
-#' @source (Bedbrook et al., 2019)
+#' @source (Karasuyama et al., 2018)
 #'
 #' @examples
 #' \dontrun{
@@ -15,9 +17,11 @@
 "rhoData"
 
 
-#' The VHSE Scale
+#' The VHSE8 Scale
 #'
-#' The widely used VHSE scales for encoding protein function.
+#' A list of vectors that allow for the encoding the physiochemical properties
+#' of each amino acid.Commonly used for machine learning in function prediction
+#' tasks.
 #'
 #' @source (Mei et al,. 2005)
 #'

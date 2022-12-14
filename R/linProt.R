@@ -1,10 +1,10 @@
 #' Linprot
 #'
-#' linProtFunc provides a pipeline that allows for that seamless training and
+#' linProt provides a pipeline that allows for that seamless training and
 #' evaluation of linear models for protein function prediction from user
 #' provided labelled AA sequences, including support for regression  tasks.
 #' This package provides visualizations of the patterns learned by the linear
-#' models which can be used to generate novel proteins with optimised
+#' models which can be used to generate novel proteins with optimized
 #' functional characteristics.
 #'
 #' @section linProt functions:
@@ -28,6 +28,7 @@
 #' @author {Benjamin Tudor Price, \email{bejamin.tudorprice@mail.utoronto.ca}. }
 #'
 #' @examples
+#' data(rhoData)
 #' examples <- rhoData$data
 #' labels <- rhoData$labels
 #'

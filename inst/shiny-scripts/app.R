@@ -153,7 +153,12 @@ ui <- fluidPage(
 #' Define server logic to read selected file ----
 #'
 #' @references
-#'
+#'Charif D, Lobry J (2007). “SeqinR 1.0-2: a contributed package to the R
+#'project for statistical computing devoted to biological sequences retrieval
+#'and analysis.” In Bastolla U, Porto M, Roman H, Vendruscolo M (eds.),
+#'Structural approaches to sequence evolution: Molecules, networks,
+#'populations, series Biological and Medical Physics, Biomedical Engineering,
+#' 207-232. Springer Verlag, New York. ISBN : 978-3-540-35305-8.
 #'
 #' @import seqinr
 server <- function(input, output) {

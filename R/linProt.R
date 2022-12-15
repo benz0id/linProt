@@ -19,6 +19,7 @@
 #'   \item plot_cost_over_rep
 #'   \item property_effect_heatmap
 #'   \item residue_effect_heatmap
+#'   \item runLinProt
 #' }
 #'
 #' @section linProt data:

@@ -168,6 +168,8 @@ R Core Team (2022). R: A language and environment for statistical computing. R
   
 Yihui Xie (2022). knitr: A General-Purpose Package for Dynamic Report Generation in R. R package version 1.40.
 
+Charif D, Lobry J (2007). “SeqinR 1.0-2: a contributed package to the R project for statistical computing devoted to biological sequences retrieval and analysis.” In Bastolla U, Porto M, Roman H, Vendruscolo M (eds.), Structural approaches to sequence evolution: Molecules, networks, populations, series Biological and Medical Physics, Biomedical Engineering, 207-232. Springer Verlag, New York. ISBN : 978-3-540-35305-8.
+
 ## Ackowledgements
 
 This package was developed as part of an assessment for 2022 BCB410H: Applied Bioinformatics course at the University of Toronto, Toronto, CANADA. `linProt` welcomes issues, enhancement requests, and other contributions. This package was improved by the advice of my peers and Dr. Anjali Silva. To submit an issue, use the GitHub issues.

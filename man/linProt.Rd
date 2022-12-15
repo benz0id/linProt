@@ -25,6 +25,7 @@ The linProt package provides 10 functions:
 \item plot_cost_over_rep
 \item property_effect_heatmap
 \item residue_effect_heatmap
+\item runLinProt
 }
 }
 

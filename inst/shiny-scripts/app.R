@@ -150,7 +150,12 @@ ui <- fluidPage(
   )
 )
 
-# Define server logic to read selected file ----
+#' Define server logic to read selected file ----
+#'
+#' @references
+#'
+#'
+#' @import seqinr
 server <- function(input, output) {
 
   observeEvent(input$run, {

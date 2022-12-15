@@ -25,7 +25,8 @@ Imports:
     assert,
     progress,
     stats,
-    shiny
+    shiny,
+    seqinr
 Suggests: 
     knitr,
     rmarkdown,

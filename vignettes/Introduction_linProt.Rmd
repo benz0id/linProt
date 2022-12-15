@@ -135,7 +135,7 @@ labels[1]
 
 # Shuffle, partition, and encode data set using the VHSE8 matrix.
 shuffled_datasets <- shuffled_partitions(examples, labels, num_p1 = 650,
-                                        encode=encode_physchem)
+                                        encode=encode_onehot)
 
 # Train a linear model to perform regression with default hyperparameters.
 model <- linear_train(train_data = shuffled_datasets$e1,

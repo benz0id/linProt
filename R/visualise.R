@@ -39,7 +39,7 @@
 #'                       shuffled_datasets$l2)
 #'
 #'
-#' residue_effect_heatmap(model)
+#' generated_plot <- residue_effect_heatmap(model)
 #'
 #' @export
 #' @import gplots
@@ -111,7 +111,7 @@ residue_effect_heatmap <- function(model,
 #'                       shuffled_datasets$l2)
 #'
 #'
-#' property_effect_heatmap(model)
+#' generated_plot <- property_effect_heatmap(model)
 #'
 #' @export
 #' @import gplots
@@ -178,7 +178,7 @@ property_effect_heatmap <- function(model,
 #'                       shuffled_datasets$l2)
 #'
 #'
-#' plot_cost_over_rep(model)
+#' generated_plot <- plot_cost_over_rep(model)
 #'
 #' @export
 #' @import ggplot2

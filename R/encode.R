@@ -137,11 +137,13 @@ encode_onehot <- function(AA_seqs){
 #' i.e. an array of peptide sequence encodings.
 #'
 #' @examples
-#'
 #' examples <- rhoData$data
 #'
 #' encoded_examples <- encode_physchem(examples)
 #' encoded_examples[1]
+#'
+#' @references
+#'
 #'
 #' @export
 #' @import assertthat

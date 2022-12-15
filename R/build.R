@@ -14,6 +14,29 @@
 #'
 #' @return The amino acid sequence of the peptide that maximizes function.
 #'
+#' data(rhoData)
+#' examples <- rhoData$data
+#' labels <- rhoData$labels
+#'
+#' shuffled_datasets <- shuffled_partitions(examples, labels, 650,
+#'                                          encode=encode_physchem)
+#'
+#' model <- linear_train(train_data = shuffled_datasets$e1,
+#'                       train_labels = shuffled_datasets$l1,
+#'                       valid_data = shuffled_datasets$e2,
+#'                       valid_labels = shuffled_datasets$l2,
+#'                       reg = 'ridge',
+#'                       reg_hypers = setNames(c(0.001, 0.001), c("l1", "l2")),
+#'                       num_iter = 1000,
+#'                       rec_loss_every = 100,
+#'                       learning_rate = 0.001
+#'                       )
+#' # The predicted maximal sequence.
+#' maximal_sequence(model)
+#'
+#' # The predicted minimal sequence.
+#' maximal_sequence(model, do_min=TRUE)
+#'
 #' @export
 maximal_sequence <- function(model, do_min = FALSE){
 

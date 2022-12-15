@@ -19,6 +19,8 @@
 #' residue in the alignment by default. Must be greater than start. If left
 #' unspecified, defaults to the full length of the alignment.
 #'
+#' @returns The generated plot.
+#'
 #' @examples
 #'
 #'
@@ -60,13 +62,13 @@ residue_effect_heatmap <- function(model,
   colnames(sel_w) <- start:stop
   rownames(sel_w) <- Amino_acids
 
-  heatmap.2(sel_w, scale = "none", col = bluered(100),
+  plot <- heatmap.2(sel_w, scale = "none", col = bluered(100),
             trace = "none", density.info = "none", Colv = FALSE, Rowv = FALSE,
             dendrogram="none",
             xlab="Aligned Residue #", ylab="Amino Acid", main="Effect of Amino
             Acid prescence on Function", key.xlab = '', key.ylab = '')
 
-  return(invisible(NULL))
+  return(plot)
 
 }
 
@@ -91,6 +93,8 @@ residue_effect_heatmap <- function(model,
 #' @param stop The last in the range of residues to be displayed, the last
 #' residue in the alignment by default. Must be greater than start. If left
 #' unspecified, defaults to the full length of the alignment.
+#'
+#' @returns The generated plot.
 #'
 #' @examples
 #'
@@ -136,7 +140,7 @@ property_effect_heatmap <- function(model,
   colnames(sel_w) <- start:stop
   rownames(sel_w) <- vhses
 
-  heatmap.2(sel_w, col = bluered(100), scale='none',
+  plot <- heatmap.2(sel_w, col = bluered(100), scale='none',
           trace = "none", density.info = "none", Colv = FALSE, Rowv = FALSE,
           dendrogram='none', key.title = "Relative Weight", keysize=1.5,
           xlab="Residue", ylab="Amino Acid", main="Relative Effect of Each
@@ -144,7 +148,7 @@ property_effect_heatmap <- function(model,
           offsetRow = 0,
           offsetCol = 0, key.xlab = '', key.ylab = '')
 
-  return(invisible(NULL))
+  return(plot)
 }
 
 
@@ -155,6 +159,8 @@ property_effect_heatmap <- function(model,
 #' and can help prevent overfitting.
 #'
 #' @param model A model produced by linear train.
+#'
+#' @returns The generated plot.
 #'
 #' @examples
 #' examples <- rhoData$data
@@ -184,11 +190,12 @@ plot_cost_over_rep <- function(model){
                               train_cost = log(model$train_losses),
                               valid_cost = log(model$valid_losses))
 
-  ggplot(progress_data, aes(x=iteration, color=dataset)) +
+  plot <- ggplot(progress_data, aes(x=iteration, color=dataset)) +
     geom_line(aes(x=iteration, y=valid_cost, colour='validation')) +
     geom_line(aes(x=iteration, y=train_cost, colour='training')) +
     labs(title="Change in Cost Through Gradient Descent",
          x="Iteration", y = "Log Cost")
+  return(plot)
 }
 
 # [END]

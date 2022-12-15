@@ -159,7 +159,7 @@ mse <- function(y, t){
 #'                       valid_labels = shuffled_datasets$l2,
 #'                       reg = 'ridge',
 #'                       reg_hypers = setNames(c(0.001, 0.001), c("l1", "l2")),
-#'                       num_iter = 1000,
+#'                       num_iter = 500,
 #'                       rec_loss_every = 100,
 #'                       learning_rate = 0.001
 #'                       )
@@ -177,7 +177,7 @@ linear_train <- function(train_data,
                          valid_labels,
                          reg = 'elastic',
                          reg_hypers = setNames(c(0.01, 0.01), c("l1", "l2")),
-                         num_iter = 1000,
+                         num_iter = 500,
                          rec_loss_every = 10,
                          learning_rate = 0.01
                          ){

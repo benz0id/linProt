@@ -166,13 +166,11 @@ R Core Team (2022). R: A language and environment for statistical computing. R
   Foundation for Statistical Computing, Vienna, Austria. URL
   https://www.R-project.org/.
   
-Yihui Xie (2022). knitr: A General-Purpose Package for Dynamic Report Generation in
-  R. R package version 1.40.
+Yihui Xie (2022). knitr: A General-Purpose Package for Dynamic Report Generation in R. R package version 1.40.
 
 ## Ackowledgements
 
-This package was developed as part of an assessment for 2022 BCB410H: Applied Bioinformatics course at the University of Toronto, Toronto, CANADA. `linProt` welcomes issues,
-enhancement requests, and other contributions. This package was improved by the advice of my peers and Anjali Silva. To submit an issue, use the GitHub issues.
+This package was developed as part of an assessment for 2022 BCB410H: Applied Bioinformatics course at the University of Toronto, Toronto, CANADA. `linProt` welcomes issues, enhancement requests, and other contributions. This package was improved by the advice of my peers and Dr. Anjali Silva. To submit an issue, use the GitHub issues.
 
 
 

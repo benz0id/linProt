@@ -104,7 +104,6 @@ ui <- fluidPage(
       ),
 
 
-
       # Horizontal line ----
       tags$hr(),
 
@@ -139,7 +138,14 @@ ui <- fluidPage(
                   tabPanel("Function Heatmap",
                            br(),
                            plotOutput("function_heatmap")
-                           )
+                           ),
+
+                  tabPanel("Maximum and Minimum Sequences",
+                           br(),
+                           textOutput("max_seq"),
+                           textOutput("min_seq")
+                  ),
+
       )
     )
   )
@@ -192,16 +198,6 @@ server <- function(input, output) {
       encode_fxn = encode_physchem
     }
 
-
-    print(input$lr)
-    print(input$num_iter)
-    print(input$l1)
-    print(input$l2)
-    print(input$start)
-    print(input$stop)
-    print(input$train_part)
-    print(input$encoding)
-
     reg_hypers <- c(l1 = input$l1, l2 = input$l2)
     print(reg_hypers)
 
@@ -215,13 +211,6 @@ server <- function(input, output) {
     valid_data <- shuffled_datasets$e2
     valid_labels <- shuffled_datasets$l2
 
-    print(length(train_data))
-    print(length(train_labels))
-    print(length(valid_data))
-    print(length(valid_labels))
-
-    print('here1')
-
 
 
     # Train a linear model to perform regression.
@@ -232,18 +221,24 @@ server <- function(input, output) {
                           reg = 'elastic',
                           reg_hypers = reg_hypers,
                           num_iter = input$num_iter,
-                          rec_loss_every = 100,
+                          rec_loss_every = 10,
                           learning_rate = input$lr)
-
+    print(model)
 
     # View the expected influence of each residue on the function, (lambda max
     # in this case).
 
-    output$train_prog <- renderImage(plot_cost_over_rep(model))
+    output$train_prog <- renderPlot({plot_cost_over_rep(model)})
+
+    output$function_heatmap <- renderPlot({residue_effect_heatmap(model,
+                                                                  input$start,
+                                                                    input$stop)})
+    text <- paste(c('Maximum Sequence - Predicted funciton: ', maximal_sequence(model), collapse=''))
+    output$max_seq <- renderText({text})
 
 
-    output$function_heatmap <- renderImage(residue_effect_heatmap(model, 380,
-                                                                  410))
+    text <- paste(c('Maximum Sequence: ', maximal_sequence(model), collapse=''))
+    output$min_seq <- renderText({maximal_sequence(text)})
   })
 }
 

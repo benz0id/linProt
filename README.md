@@ -131,14 +131,19 @@ residue_effect_heatmap(model, 380, 410)
 <img src="man/figures/README-example-1.png" width="100%" />
 
 ``` r
-cost_graph <- plot_cost_over_rep(model)
+plot_cost_over_rep(model)
+```
+
+<img src="man/figures/README-example-2.png" width="100%" />
+
+``` r
 
 # Make some predictions.
 results <- predictions(shuffled_datasets$e2, model)
 as.integer(results[1:5])
-#> [1] 416 539 524 530 539
+#> [1] 537 551 539 590 590
 shuffled_datasets$l2[1:5]
-#> [1] 506 554 549 528 492
+#> [1] 516 526 566 566 604
 ```
 
 See the vignettes for a detailed description of the available functions,

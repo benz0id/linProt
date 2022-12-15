@@ -1,8 +1,6 @@
-library(shiny)
-library(seqinr)
-library(assertthat)
-library(linProt)
-data(rhoData)
+# library(shiny)
+# library(seqinr)
+# library(assertthat)
 
 # Define UI for data upload app ----
 ui <- fluidPage(

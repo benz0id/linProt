@@ -51,9 +51,9 @@
 #'
 #' # View the expected influence of each residue on the function, (lambda max
 #' # in this case).
-#' generated_plot <- residue_effect_heatmap(model, 380, 410)
+#' residue_effect_heatmap(model, 380, 410)
 #'
-#' generated_plot <- plot_cost_over_rep(model)
+#' cost_graph <- plot_cost_over_rep(model)
 #'
 #' results <- predictions(valid_data, model)
 #'

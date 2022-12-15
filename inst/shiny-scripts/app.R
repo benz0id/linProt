@@ -185,12 +185,9 @@ server <- function(input, output) {
                                                    collapse = ''))
     }
     examples <- examples_list
-    print(examples[[1]])
 
     # Extract run parameters.
     num_train = as.integer(length(examples) * input$train_part / 100)
-
-    print(num_train)
 
     if (input$encoding == "one-hot"){
       encode_fxn = encode_onehot
@@ -199,7 +196,6 @@ server <- function(input, output) {
     }
 
     reg_hypers <- c(l1 = input$l1, l2 = input$l2)
-    print(reg_hypers)
 
     # Shuffle, partition, and encode data set.
     shuffled_datasets <- shuffled_partitions(examples, labels, num_train,
@@ -223,7 +219,6 @@ server <- function(input, output) {
                           num_iter = input$num_iter,
                           rec_loss_every = 10,
                           learning_rate = input$lr)
-    print(model)
 
     # View the expected influence of each residue on the function, (lambda max
     # in this case).
@@ -233,12 +228,14 @@ server <- function(input, output) {
     output$function_heatmap <- renderPlot({residue_effect_heatmap(model,
                                                                   input$start,
                                                                     input$stop)})
-    text <- paste(c('Maximum Sequence - Predicted funciton: ', maximal_sequence(model), collapse=''))
-    output$max_seq <- renderText({text})
+    text1 <- paste(c('Maximum Sequence: ',
+                    maximal_sequence(model), collapse=''))
+    output$max_seq <- renderText({text1})
 
 
-    text <- paste(c('Maximum Sequence: ', maximal_sequence(model), collapse=''))
-    output$min_seq <- renderText({maximal_sequence(text)})
+    text2 <- paste(c('Minimal Sequence: ', maximal_sequence(model, do_min=TRUE),
+                    collapse=''))
+    output$min_seq <- renderText({text2})
   })
 }
 

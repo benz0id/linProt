@@ -19,7 +19,7 @@
 #' residue in the alignment by default. Must be greater than start. If left
 #' unspecified, defaults to the full length of the alignment.
 #'
-#' @returns The generated plot.
+#' @returns NLL
 #'
 #' @examples
 #'
@@ -39,7 +39,7 @@
 #'                       shuffled_datasets$l2)
 #'
 #'
-#' generated_plot <- residue_effect_heatmap(model)
+#' residue_effect_heatmap(model)
 #'
 #' @export
 #' @import gplots
@@ -62,13 +62,13 @@ residue_effect_heatmap <- function(model,
   colnames(sel_w) <- start:stop
   rownames(sel_w) <- Amino_acids
 
-  plot <- heatmap.2(sel_w, scale = "none", col = bluered(100),
+  heatmap.2(sel_w, scale = "none", col = bluered(100),
             trace = "none", density.info = "none", Colv = FALSE, Rowv = FALSE,
             dendrogram="none",
             xlab="Aligned Residue #", ylab="Amino Acid", main="Effect of Amino
             Acid prescence on Function", key.xlab = '', key.ylab = '')
 
-  return(plot)
+  return(return(invisible(NULL)))
 
 }
 
@@ -94,7 +94,7 @@ residue_effect_heatmap <- function(model,
 #' residue in the alignment by default. Must be greater than start. If left
 #' unspecified, defaults to the full length of the alignment.
 #'
-#' @returns The generated plot.
+#' @returns NULL
 #'
 #' @examples
 #'
@@ -111,7 +111,7 @@ residue_effect_heatmap <- function(model,
 #'                       shuffled_datasets$l2)
 #'
 #'
-#' generated_plot <- property_effect_heatmap(model)
+#' property_effect_heatmap(model)
 #'
 #' @export
 #' @import gplots
@@ -140,7 +140,7 @@ property_effect_heatmap <- function(model,
   colnames(sel_w) <- start:stop
   rownames(sel_w) <- vhses
 
-  plot <- heatmap.2(sel_w, col = bluered(100), scale='none',
+  heatmap.2(sel_w, col = bluered(100), scale='none',
           trace = "none", density.info = "none", Colv = FALSE, Rowv = FALSE,
           dendrogram='none', key.title = "Relative Weight", keysize=1.5,
           xlab="Residue", ylab="Amino Acid", main="Relative Effect of Each
@@ -148,7 +148,7 @@ property_effect_heatmap <- function(model,
           offsetRow = 0,
           offsetCol = 0, key.xlab = '', key.ylab = '')
 
-  return(plot)
+  return(return(invisible(NULL)))
 }
 
 
@@ -178,7 +178,7 @@ property_effect_heatmap <- function(model,
 #'                       shuffled_datasets$l2)
 #'
 #'
-#' generated_plot <- plot_cost_over_rep(model)
+#' cost_graph <- plot_cost_over_rep(model)
 #'
 #' @export
 #' @import ggplot2

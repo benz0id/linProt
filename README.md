@@ -125,20 +125,20 @@ model <- linear_train(train_data = shuffled_datasets$e1,
 # View the expected influence of each residue on the function, (lambda max
 # in this case).
 
-generated_plot <- residue_effect_heatmap(model, 380, 410)
+residue_effect_heatmap(model, 380, 410)
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />
 
 ``` r
-generated_plot <- plot_cost_over_rep(model)
+cost_graph <- plot_cost_over_rep(model)
 
 # Make some predictions.
 results <- predictions(shuffled_datasets$e2, model)
 as.integer(results[1:5])
-#> [1] 541 537 543 469 414
+#> [1] 416 539 524 530 539
 shuffled_datasets$l2[1:5]
-#> [1] 526 495 573 470 515
+#> [1] 506 554 549 528 492
 ```
 
 See the vignettes for a detailed description of the available functions,

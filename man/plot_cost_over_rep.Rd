@@ -9,6 +9,9 @@ plot_cost_over_rep(model)
 \arguments{
 \item{model}{A model produced by linear train.}
 }
+\value{
+The generated plot.
+}
 \description{
 Visualizes the change in cost over both the training and validation sets
 throughout the course of the training. Allows for tuning of hyperparameters

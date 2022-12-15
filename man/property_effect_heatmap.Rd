@@ -11,20 +11,21 @@ property_effect_heatmap(model, start = 1, stop = -1)
 been trained on a physiochemical encoding.}
 
 \item{start}{The first in the range of residues to be displayed, 1 by
-default.}
+default. Must be less than start.}
 
 \item{stop}{The last in the range of residues to be displayed, the last
-residue in the alignment by default.}
+residue in the alignment by default. Must be greater than start. If left
+unspecified, defaults to the full length of the alignment.}
 }
 \description{
-A function that generates an N x 8 heatmap displaying the weight assigned to
+A function that generates an N x 8 heat map displaying the weight assigned to
 each of the VHSE8 properties across a specified region of the alignment.
-Allows for the interpretation of the learned attributes of the dataset. e.g. a red tile at
-a given position indicates that physiochemical property is related to an
-increase the protein function when present at that position.
+Allows for the interpretation of the learned attributes of the dataset. e.g.
+a red tile at a given position indicates that physiochemical property is
+related to an increase the protein function when present at that position.
 }
 \details{
-Extend produced figure as necceesary for best results.
+Extend produced figure as necessary for best results.
 }
 \examples{
 

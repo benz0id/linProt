@@ -6,11 +6,12 @@ Authors@R: person("Benjamin", "Tudor Price",
     email = "benjamin.tudorprice@mail.utoronto.ca",
     role = c("aut", "cre"))
 Maintainer: Ben Tudor Price <benjamin.tudorprice@mail.utoronto.ca>
-Description: Linprot rovides a modular pipeline that allows for that seamless training and 
-    evaluation of linear models for protein function prediction from user provided 
-    labelled AA sequences. This package provides visualizations of the patterns 
-    learned by the linear models which can be used to generate novel proteins with 
-    customizable functional characteristics.
+Description: Linprot rovides a modular pipeline that allows the training and 
+    evaluation of linear models for protein function prediction from a user
+    provided peptide alignment with corresponding function labels.
+    This package provides visualizations of the patterns learned by the linear 
+    models which can be used to generate novel proteins with customizable 
+    functional characteristics.
 License: MIT + file LICENSE
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.2
@@ -24,6 +25,7 @@ Imports:
     assert,
     progress,
     stats,
+    shiny
 Suggests: 
     knitr,
     rmarkdown,

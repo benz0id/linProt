@@ -16,11 +16,12 @@ ui <- fluidPage(
       tags$p("Welcome to Shiny App of linProt R package."),
       br(),
 
-      tags$p("linProt rovides a modular pipeline that allows for that seamless training and
-    evaluation of linear models for protein function prediction from user provided
-    labelled AA sequences. This package provides visualizations of the patterns
-    learned by the linear models which can be used to generate novel proteins with
-    customizable functional characteristics."),
+      tags$p("Linprot rovides a modular pipeline that allows the training and
+    evaluation of linear models for protein function prediction from a user
+    provided peptide alignment with corresponding function labels.
+    This package provides visualizations of the patterns learned by the linear
+    models which can be used to generate novel proteins with customizable
+    functional characteristics."),
 
       tags$div("The included dataset is from",
       tags$a(href = "https://www.nature.com/articles/s41598-018-33984-w#MOESM3",

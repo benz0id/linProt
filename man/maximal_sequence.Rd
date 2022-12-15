@@ -2,7 +2,7 @@
 % Please edit documentation in R/build.R
 \name{maximal_sequence}
 \alias{maximal_sequence}
-\title{Produce a Sequence to Optimize a Given Function}
+\title{Produce a peptide with maximimal predicted function.}
 \usage{
 maximal_sequence(model, do_min = FALSE)
 }
@@ -10,17 +10,42 @@ maximal_sequence(model, do_min = FALSE)
 \item{model}{The model as learned by linear_train. This model must have
 been trained on one-hot encoding.}
 
-\item{do_min}{Whether to change behaviour to instead minimise the protein
+\item{do_min}{Whether to change behaviour to instead minimize the protein
 function.}
 }
 \value{
-A character representation of the best peptide.
+The amino acid sequence of the peptide that maximizes function.
 }
 \description{
 Uses the weights leaned by a model to produce an amino acid sequence that
-produces the maximal predited protein function. Will only work on alignments
+produces the maximal predicted protein function. Will only work on alignments
 with low-indel content.
 }
 \details{
 Note that a random base is chose when there is a tie between weights.
+}
+\examples{
+data(rhoData)
+examples <- rhoData$data
+labels <- rhoData$labels
+
+shuffled_datasets <- shuffled_partitions(examples, labels, 650,
+                                         encode=encode_onehot)
+
+model <- linear_train(train_data = shuffled_datasets$e1,
+                      train_labels = shuffled_datasets$l1,
+                      valid_data = shuffled_datasets$e2,
+                      valid_labels = shuffled_datasets$l2,
+                      reg = 'ridge',
+                      reg_hypers = setNames(c(0.001, 0.001), c("l1", "l2")),
+                      num_iter = 1000,
+                      rec_loss_every = 100,
+                      learning_rate = 0.001
+                      )
+# The predicted maximal sequence.
+maximal_sequence(model)
+
+# The predicted minimal sequence.
+maximal_sequence(model, do_min=TRUE)
+
 }

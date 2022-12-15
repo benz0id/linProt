@@ -19,7 +19,7 @@
 #' residue in the alignment by default. Must be greater than start. If left
 #' unspecified, defaults to the full length of the alignment.
 #'
-#' @returns NLL
+#' @returns NULL
 #'
 #' @examples
 #'
@@ -68,7 +68,7 @@ residue_effect_heatmap <- function(model,
             xlab="Aligned Residue #", ylab="Amino Acid", main="Effect of Amino
             Acid prescence on Function", key.xlab = '', key.ylab = '')
 
-  return(return(invisible(NULL)))
+  return(invisible(NULL))
 
 }
 
@@ -178,7 +178,7 @@ property_effect_heatmap <- function(model,
 #'                       shuffled_datasets$l2)
 #'
 #'
-#' cost_graph <- plot_cost_over_rep(model)
+#' plot_cost_over_rep(model)
 #'
 #' @export
 #' @import ggplot2

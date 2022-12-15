@@ -2,23 +2,29 @@
 % Please edit documentation in R/encode.R
 \name{encode_onehot}
 \alias{encode_onehot}
-\title{Encode Aligned Peptide Sequences into a One-hot Matrix}
+\title{Encode a list of aligned AA sequences into a tensor of one-hot encodings.}
 \usage{
 encode_onehot(AA_seqs)
 }
 \arguments{
-\item{AA_seqs}{List of aligned character sequences.}
+\item{AA_seqs}{A list of aligned peptides. Represented as a list of character
+vectors.}
 }
 \value{
-Rank 3 array of peptide sequence encodings.
+Rank 3 array of all peptide sequence encodings. i.e. an array of
+peptide sequence encodings.
 }
 \description{
-Encode Aligned Peptide Sequences into a One-hot Matrix
+Encode a list of aligned AA sequences into a tensor of one-hot encodings.
 }
 \examples{
 
 examples <- rhoData$data
 
-encoded_enamples <- encode_onehot(examples)
+encoded_examples <- encode_onehot(examples)
 
+}
+\references{
+Wickham H (2019). assertthat: Easy Pre and Post Assertions. R package
+version 0.2.1, https://CRAN.R-project.org/package=assertthat.
 }

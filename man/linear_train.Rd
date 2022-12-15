@@ -11,13 +11,13 @@ linear_train(
   valid_labels,
   reg = "elastic",
   reg_hypers = setNames(c(0.01, 0.01), c("l1", "l2")),
-  num_iter = 1000,
+  num_iter = 500,
   rec_loss_every = 10,
   learning_rate = 0.01
 )
 }
 \arguments{
-\item{train_data}{Rank 3 array of encoded aligned protein sequences.}
+\item{train_data}{Rank 3 array of encoded protein sequences.}
 
 \item{train_labels}{Numeric vector of labels for each of the given training
 examples.}
@@ -33,7 +33,7 @@ hyperparameters must be defined.}
 
 \item{reg_hypers}{Named numeric vector containing the l1 and l2 constants to
 be used in regularization. Both 0.01 by default. NOTE: Ensure that l1 and l2
-hyperparameters required for chosen regularisation are used.}
+hyperparameters required for chosen regularization are used.}
 
 \item{num_iter}{The integer number of iterations to be performed during gradient
 descent. 1000 by default. Higher values often lead to more performant models,
@@ -45,15 +45,22 @@ every <rec_loss_every> iterations.}
 \item{learning_rate}{The double learning rate for gradient descent.}
 }
 \value{
-A trained model, containing interprtable weights that may be used for
-prediction of further examples.
+A list containing the trained model and its hyperparameters,
+consisting of:
+weights - A matrix containing the learned weights.
+intercept - The bias of the model.
+train_losses - The total loss of the model on the training set at each step
+of gradient descent.
+valid_losses - The total loss of the model on the validation set at each step
+of gradient descent.
+every - Equal to num_iter, used to calculate the number of gradient descent
+iterations.
 }
 \description{
 Trains a linear model using gradient descent. Stores the performance on the
 training and validations sets throughout the process.
 }
 \examples{
-
 examples <- rhoData$data
 labels <- rhoData$labels
 
@@ -66,11 +73,11 @@ model <- linear_train(train_data = shuffled_datasets$e1,
                       valid_labels = shuffled_datasets$l2,
                       reg = 'ridge',
                       reg_hypers = setNames(c(0.001, 0.001), c("l1", "l2")),
-                      num_iter = 1000,
+                      num_iter = 500,
                       rec_loss_every = 100,
                       learning_rate = 0.001
                       )
 
-predictions(shuffled_datasets$e1[50:100, ,], model)
+predictions(shuffled_datasets$e1[50:60, ,], model)
 
 }

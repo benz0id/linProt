@@ -8,18 +8,20 @@
 An object of class \code{list} of length 2.
 }
 \source{
-(Bedbrook et al., 2019)
+(Karasuyama et al., 2018)
 }
 \usage{
 rhoData
 }
 \description{
-A dataset containing the lambda max values for several channel rhodopsin
-variants as compiled for use in machine learning.
+The peak absorbation frequencies for a number of channel rhodopsins were
+provided by (Karasuyama et al., 2018). We can treat these data as a set of
+examples and thier respectives labels. This dataset was produced by aligning
+the amino acid sequences of these proteins (using CLUSTAL OMEGA).
 }
 \details{
-The cooresponding sequences were then aligned using the CLUSTAL OMEGA
-alogrithm
+This dataset can be substituted for any list of aligned protein sequences and
+float values representing some functional property of those proteins.
 }
 \examples{
 \dontrun{

@@ -88,6 +88,10 @@ strs_to_matrix <- function(strs){
 #'
 #' encoded_examples <- encode_onehot(examples)
 #'
+#' @references
+#' Wickham H (2019). assertthat: Easy Pre and Post Assertions. R package
+#' version 0.2.1, https://CRAN.R-project.org/package=assertthat.
+#'
 #' @export
 #' @import assertthat
 encode_onehot <- function(AA_seqs){
@@ -143,7 +147,8 @@ encode_onehot <- function(AA_seqs){
 #' encoded_examples[1]
 #'
 #' @references
-#'
+#'Wickham H (2019). assertthat: Easy Pre and Post Assertions.
+#'R package version 0.2.1, https://CRAN.R-project.org/package=assertthat.
 #'
 #' @export
 #' @import assertthat

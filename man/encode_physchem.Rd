@@ -7,18 +7,24 @@
 encode_physchem(AA_seqs)
 }
 \arguments{
-\item{AA_seqs}{List of aligned character sequences.}
+\item{AA_seqs}{A list of aligned peptides.Represented as a list of character
+vectors.}
 }
 \value{
-Rank 3 array of peptide sequence encodings.
+Rank 3 array containing all peptide sequence encodings (rank 2).
+i.e. an array of peptide sequence encodings.
 }
 \description{
 Encode Aligned Peptide Sequences Using the VHSE8 Matrix
 }
 \examples{
-
 examples <- rhoData$data
 
 encoded_examples <- encode_physchem(examples)
+encoded_examples[1]
 
+}
+\references{
+Wickham H (2019). assertthat: Easy Pre and Post Assertions.
+R package version 0.2.1, https://CRAN.R-project.org/package=assertthat.
 }

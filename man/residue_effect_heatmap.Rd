@@ -8,13 +8,14 @@ residue_effect_heatmap(model, start = 1, stop = -1)
 }
 \arguments{
 \item{model}{The model as learned by linear_train. This model must have
-been trained on one-hot encoding.}
+been trained on a one-hot oncoded training set.}
 
 \item{start}{The first in the range of residues to be displayed, 1 by
-default.}
+default. Must be less than start.}
 
 \item{stop}{The last in the range of residues to be displayed, the last
-residue in the alignment by default.}
+residue in the alignment by default. Must be greater than start. If left
+unspecified, defaults to the full length of the alignment.}
 }
 \description{
 A function that generates an N x 20 heatmap displaying the weight assigned to
@@ -24,7 +25,7 @@ at a given position indicates that amino acid is expected to increase the
 protein function when present at that position.
 }
 \details{
-Extend produced figure as necceesary for best results.
+Extend the width of the produced figure as necessary for best results.
 }
 \examples{
 

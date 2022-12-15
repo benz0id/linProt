@@ -12,14 +12,15 @@
 #' @param do_min Whether to change behaviour to instead minimize the protein
 #' function.
 #'
-#' @return The amino acid sequence of the peptide that maximizes function.
+#' @returns The amino acid sequence of the peptide that maximizes function.
 #'
+#' @examples
 #' data(rhoData)
 #' examples <- rhoData$data
 #' labels <- rhoData$labels
 #'
 #' shuffled_datasets <- shuffled_partitions(examples, labels, 650,
-#'                                          encode=encode_physchem)
+#'                                          encode=encode_onehot)
 #'
 #' model <- linear_train(train_data = shuffled_datasets$e1,
 #'                       train_labels = shuffled_datasets$l1,

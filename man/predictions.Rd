@@ -7,17 +7,17 @@
 predictions(X, model)
 }
 \arguments{
-\item{X}{A rank 3 collection of rank 2 encodings of protein sequences,
-encoded under the same scheme as model.}
+\item{X}{Encoded protein sequences. A rank 3 tensor containing examples with
+the same dimensionality as those used to train the model.}
 
-\item{model}{The model to perform the prediction.}
+\item{model}{The model used to perform the prediction.}
 }
 \value{
-Vector of double predictions.
+Vector of doubles. Predictions for each input example.
 }
 \description{
 Performs regression using the given, trained model in order to predict
-some continuously ditributed protein function.
+some continuously distributed protein function.
 }
 \examples{
 

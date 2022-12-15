@@ -5,11 +5,11 @@
 \alias{linProt}
 \title{Linprot}
 \description{
-linProtFunc provides a pipeline that allows for that seamless training and
+linProt provides a pipeline that allows for that seamless training and
 evaluation of linear models for protein function prediction from user
 provided labelled AA sequences, including support for regression  tasks.
 This package provides visualizations of the patterns learned by the linear
-models which can be used to generate novel proteins with optimised
+models which can be used to generate novel proteins with optimized
 functional characteristics.
 }
 \section{linProt functions}{
@@ -60,7 +60,7 @@ model <- linear_train(train_data,
 # in this case).
 residue_effect_heatmap(model, 380, 410)
 
-plot_cost_over_rep(model)
+cost_graph <- plot_cost_over_rep(model)
 
 results <- predictions(valid_data, model)
 

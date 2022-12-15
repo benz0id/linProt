@@ -7,20 +7,23 @@
 shuffled_partitions(examples, labels, num_p1, encode = NULL)
 }
 \arguments{
-\item{examples}{A list of aligned peptide sequences.}
+\item{examples}{A list of aligned amino acid sequences.}
 
-\item{labels}{The continuously distributed function for each of the given
-examples.}
+\item{labels}{A list of floating point numbers representing the
+experimentally derived protein function for each example sequence.}
 
 \item{num_p1}{The number of examples to put the in the first dataset. The
-remainder will be put in the second dataset.}
+remainder will be put in the second dataset. This should be greater than 0
+and less than or equal to the number of eaxamples in the given dataset.}
 
 \item{encode}{Function to be used to encode the given examples. NULL by
-default, returning the original unmodified peptide sequences.}
+default, returning the original unmodified peptide sequences. The two
+encoding functions provided by this package are \code{encode_onehot} and
+\code{encode_physchem}.}
 }
 \description{
 Randomly shuffles the given dataset before seperating it into two sets which
-are then encoded and ready for use in training a linear model.
+are then encoded and ready for use to train a linear model.
 }
 \examples{
 examples <- rhoData$data

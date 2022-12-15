@@ -79,6 +79,13 @@
 #' enables minimally invasive optogenetics. Nature Methods, 16(11), 1176–1184.
 #' https://doi.org/10.1038/s41592-019-0583-8
 #'
+#' Charif D, Lobry J (2007). “SeqinR 1.0-2: a contributed package to the R
+#' project for statistical computing devoted to biological sequences retrieval
+#' and analysis.” In Bastolla U, Porto M, Roman H, Vendruscolo M (eds.),
+#' Structural approaches to sequence evolution: Molecules, networks,
+#' opulations, series Biological and Medical Physics, Biomedical Engineering,
+#' 207-232. Springer Verlag, New York. ISBN : 978-3-540-35305-8.
+#'
 #' @docType package
 #' @name linProt
 NULL

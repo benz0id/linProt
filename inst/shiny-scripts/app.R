@@ -180,7 +180,7 @@ server <- function(input, output) {
     tryCatch(
       {
         labels <- as.numeric(unlist(read.csv(labels_path, header = FALSE)$V1))
-        examples <- read.fasta(examples_path)
+        examples <- seqinr::read.fasta(examples_path)
       },
       error = function(e) {
         stop(safeError(e))

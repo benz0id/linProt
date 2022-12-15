@@ -1,4 +1,8 @@
 library(shiny)
+library(seqinr)
+library(assertthat)
+library(linProt)
+data(rhoData)
 
 # Define UI for data upload app ----
 ui <- fluidPage(
@@ -59,9 +63,9 @@ ui <- fluidPage(
       ),
 
       radioButtons("encoding", "Encoding Method",
-                   choices = c(onehot = "One-hot",
+                   choices = c(one_hot = "one-hot",
                                vhse = 'VHSE8'),
-                   selected = "One-hot"),
+                   selected = "one-hot"),
 
       tags$hr(),
 
@@ -100,6 +104,7 @@ ui <- fluidPage(
       ),
 
 
+
       # Horizontal line ----
       tags$hr(),
 
@@ -115,7 +120,12 @@ ui <- fluidPage(
                    'Last amino acid index to be included in heatmap.',
                    value=5,
                    width='100%'
-      )),
+      ),
+
+      actionButton("run", "Run Analysis")
+
+
+      ),
 
     # Main panel for displaying outputs ----
     mainPanel(
@@ -137,12 +147,107 @@ ui <- fluidPage(
 
 # Define server logic to read selected file ----
 server <- function(input, output) {
-  print(input$alignment)
 
-  if (is.null(input$alignment) | is.null(input$labels)){
+  observeEvent(input$run, {
 
-  }
+    # Check that user has input required files.
+    if (is.null(input$alignment) | is.null(input$labels)){
+      # No externally provided data. Use local data.
+      examples_path <- '../extdata/peptide_alignment.fasta'
+      labels_path <- '../extdata/lambda_max.csv'
+    } else {
+      # Use externally provided data
+      examples_path <- input$labels$datapath
+      labels_path <- input$alignment$datapath
+    }
 
+    # Safely parse external data.
+    tryCatch(
+      {
+        labels <- as.numeric(unlist(read.csv(labels_path, header = FALSE)$V1))
+        examples <- read.fasta(examples_path)
+      },
+      error = function(e) {
+        stop(safeError(e))
+      }
+    )
+
+    # Convert to list of strings.
+    examples_list <- list()
+    for (i in seq_along(examples)){
+      examples_list <- append(examples_list, paste(examples[[i]], sep='',
+                                                   collapse = ''))
+    }
+    examples <- examples_list
+    print(examples[[1]])
+
+    # Extract run parameters.
+    num_train = as.integer(length(examples) * input$train_part / 100)
+
+    print(num_train)
+
+    if (input$encoding == "one-hot"){
+      encode_fxn = encode_onehot
+    } else {
+      encode_fxn = encode_physchem
+    }
+
+
+    print(input$lr)
+    print(input$num_iter)
+    print(input$l1)
+    print(input$l2)
+    print(input$start)
+    print(input$stop)
+    print(input$train_part)
+    print(input$encoding)
+
+    reg_hypers <- c(l1 = input$l1, l2 = input$l2)
+    print(reg_hypers)
+
+    # Shuffle, partition, and encode data set.
+    shuffled_datasets <- shuffled_partitions(examples, labels, num_train,
+                                             encode=encode_fxn)
+
+    # Designate test and train data.
+    train_data <- shuffled_datasets$e1
+    train_labels <- shuffled_datasets$l1
+    valid_data <- shuffled_datasets$e2
+    valid_labels <- shuffled_datasets$l2
+
+    print(length(train_data))
+    print(length(train_labels))
+    print(length(valid_data))
+    print(length(valid_labels))
+
+    print('here1')
+
+
+
+    # Train a linear model to perform regression.
+    model <- linear_train(train_data,
+                          train_labels,
+                          valid_data,
+                          valid_labels,
+                          reg = 'elastic',
+                          reg_hypers = reg_hypers,
+                          num_iter = input$num_iter,
+                          rec_loss_every = 100,
+                          learning_rate = input$lr)
+
+
+    # View the expected influence of each residue on the function, (lambda max
+    # in this case).
+
+    output$train_prog <- renderImage(plot_cost_over_rep(model))
+
+
+    output$function_heatmap <- renderImage(residue_effect_heatmap(model, 380,
+                                                                  410))
+  })
 }
+
+
+
 # Run the app ----
 shinyApp(ui, server)

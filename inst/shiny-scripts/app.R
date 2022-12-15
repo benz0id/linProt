@@ -160,7 +160,7 @@ ui <- fluidPage(
 #'populations, series Biological and Medical Physics, Biomedical Engineering,
 #' 207-232. Springer Verlag, New York. ISBN : 978-3-540-35305-8.
 #'
-#' @import seqinr
+#' @importFrom seqinr read.fasta
 server <- function(input, output) {
 
   observeEvent(input$run, {

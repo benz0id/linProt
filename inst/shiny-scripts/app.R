@@ -1,6 +1,7 @@
-# library(shiny)
-# library(seqinr)
-# library(assertthat)
+library(shiny)
+library(seqinr)
+library(linProt)
+library(assertthat)
 
 # Define UI for data upload app ----
 ui <- fluidPage(
@@ -172,8 +173,8 @@ server <- function(input, output) {
       labels_path <- '../extdata/lambda_max.csv'
     } else {
       # Use externally provided data
-      examples_path <- input$labels$datapath
-      labels_path <- input$alignment$datapath
+      examples_path <- input$alignment$datapath
+      labels_path <- input$labels$datapath
     }
 
     # Safely parse external data.

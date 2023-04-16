@@ -10,7 +10,7 @@
 
 This package provides a pipeline that allows for that training and
 evaluation of linear models for protein function prediction from user
-provided labelled AA sequences. This package provides visualizations of
+provided labelled AA sequences. This package also provides visualizations of
 the patterns learned by the linear models and provides functions that
 can be used to generate novel proteins with optimised functional
 characteristics.
